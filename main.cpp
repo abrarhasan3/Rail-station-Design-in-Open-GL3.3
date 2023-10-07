@@ -66,10 +66,17 @@ BasicCamera basic_camera(eyeX, eyeY, eyeZ, lookAtX, lookAtY, lookAtZ, V);
 
 // positions of the point lights
 glm::vec3 pointLightPositions[] = {
-    glm::vec3(1.50f,  1.50f,  0.0f),
-    glm::vec3(1.5f,  -1.5f,  0.0f),
-    glm::vec3(-1.5f,  1.5f,  0.0f),
-    glm::vec3(-1.5f,  -1.5f,  0.0f)
+    glm::vec3(2.2,1.9,-1.2f),
+    glm::vec3(2.2,1.9,-1.2-(2.4*1)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 2)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 3)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 4)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 5)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 6)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 7)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 8)),
+    glm::vec3(2.2,1.9,-1.2 - (2.4 * 9)),
+    
 };
 PointLight pointlight1(
 
@@ -115,6 +122,75 @@ PointLight pointlight4(
     0.032f, //k_q
     4       // light number
 );
+
+PointLight pointlight5(
+
+    pointLightPositions[4].x, pointLightPositions[4].y, pointLightPositions[4].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    5       // light number
+);
+PointLight pointlight6(
+
+    pointLightPositions[5].x, pointLightPositions[5].y, pointLightPositions[5].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    6       // light number
+);
+PointLight pointlight7(
+
+    pointLightPositions[6].x, pointLightPositions[6].y, pointLightPositions[6].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    7       // light number
+);
+PointLight pointlight8(
+
+    pointLightPositions[7].x, pointLightPositions[7].y, pointLightPositions[7].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    8       // light number
+);
+PointLight pointlight9(
+
+    pointLightPositions[8].x, pointLightPositions[8].y, pointLightPositions[8].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    9       // light number
+);
+PointLight pointlight10(
+
+    pointLightPositions[9].x, pointLightPositions[9].y, pointLightPositions[9].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    10       // light number
+);
+
+
 
 
 // light settings
@@ -307,7 +383,13 @@ int main()
         // point light 3
         pointlight3.setUpPointLight(lightingShader);
         // point light 4
-        pointlight4.setUpPointLight(lightingShader);
+       pointlight4.setUpPointLight(lightingShader);
+       pointlight5.setUpPointLight(lightingShader);
+       pointlight6.setUpPointLight(lightingShader);
+       pointlight7.setUpPointLight(lightingShader);
+       pointlight8.setUpPointLight(lightingShader);
+       pointlight9.setUpPointLight(lightingShader);
+       pointlight10.setUpPointLight(lightingShader);
 
         // activate shader
         lightingShader.use();
@@ -348,11 +430,12 @@ int main()
         glBindVertexArray(lightCubeVAO);
         for (unsigned int i = 0; i < 10; i++)
         {
-            glm::mat4 model2 = model;
+            
+           
             model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(2.0,1.9,-1.2-2.4*i ));
+            model = glm::translate(model, pointLightPositions[i]);
             model = glm::scale(model, glm::vec3(.6, .1, .2)); // Make it a smaller cube
-            //model = model2 * model;
+            model = translateMatrix * rotateXMatrix * rotateYMatrix * rotateZMatrix * scaleMatrix * model;
             ourShader.setMat4("model", model);
             ourShader.setVec3("color", glm::vec3(0.8f, 0.8f, 0.8f));
             
@@ -555,7 +638,7 @@ void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
     scale = glm::scale(model, glm::vec3(1.5, 0.2, -0.6));
 
     model = alTogether * scale * translate;
-    drawCube(cubeVAO, lightingShader, model, 0.545, 0.271, 0.075);
+    drawCube(cubeVAO, lightingShader, model, (float)19 / 255, (float)42 / 255, (float)48 / 255);
 
 
     //Left leg 1
@@ -565,7 +648,7 @@ void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
     scale = glm::scale(model, glm::vec3(.1, -0.4, -.5));
 
     model = alTogether * scale * translate;
-    drawCube(cubeVAO, lightingShader, model, 0.545, 0.271, 0.075);
+    drawCube(cubeVAO, lightingShader, model, (float)136 / 255, (float)139 / 255, (float)141 / 255);
 
     //Right leg 1
     model = glm::mat4(1.0f);
@@ -575,7 +658,7 @@ void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 
     translate = glm::translate(model, glm::vec3(1.4, 0.0, 0.0));
     model = alTogether * translate * scale;
-    drawCube(cubeVAO, lightingShader, model, 0.945, 0.9294, 0.89411);
+    drawCube(cubeVAO, lightingShader, model, (float)136 / 255, (float)139 / 255, (float)141 / 255);
 
 }
 

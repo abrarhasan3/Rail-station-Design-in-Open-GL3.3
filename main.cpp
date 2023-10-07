@@ -29,6 +29,7 @@ void drawCube(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model, fl
 void bed(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
+void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 
 
 
@@ -372,52 +373,156 @@ int main()
 
 void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 {
-    chair(cubeVAO, lightingShader, alTogether);
-    glm::mat4 identityMatrix = glm::mat4(1.0f);
+    float distance = 2.4;
+    for (int i = 0; i < 10; i++)
+
+    {
+        glm::mat4 identityMatrix = glm::mat4(1.0f);
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 translate = glm::mat4(1.0f), translate2 = glm::mat4(1.0f);
+        glm::mat4 scale = glm::mat4(1.0f);
+
+
+        translate = glm::translate(model, glm::vec3(0.0, 0, -i*distance));
+
+        chair(cubeVAO, lightingShader, alTogether*translate);
+
+
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        translate2 = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+
+
+        glm::mat4 reflectmatrix = glm::mat4(1.0f);
+        reflectmatrix[2][2] = -1.0f;
+
+        translate = glm::translate(model, glm::vec3(0.0, 0, -2.0 - i * distance));
+        chair(cubeVAO, lightingShader, alTogether * translate * reflectmatrix);
+
+
+
+
+
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        translate2 = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+        translate = glm::translate(model, glm::vec3(3.0, 0, -i * distance));
+
+        model = alTogether  * translate;
+        chair(cubeVAO, lightingShader, model);
+
+
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        translate2 = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+        translate = glm::translate(model, glm::vec3(3.0, 0, -2.0 - i * distance));
+        model = alTogether * translate * reflectmatrix;
+        chair(cubeVAO, lightingShader, model);
+
+    }
+
+
+    //Floor
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 translate = glm::mat4(1.0f), translate2 = glm::mat4(1.0f);
+    glm::mat4 translate = glm::mat4(1.0f);
     glm::mat4 scale = glm::mat4(1.0f);
 
-    translate = glm::translate(model, glm::vec3(2.0, 0, 0.0));
+    scale = glm::scale(model, glm::vec3(4.7, 0.0, -24.2));
+    translate = glm::translate(model, glm::vec3(-.1, -.4, .2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, 0.549, 0.549, 0.533);
 
-    model = alTogether * scale * translate;
-    chair(cubeVAO, lightingShader, model);
+
+
+    //leftwall
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    model = alTogether;
+    wallTrain(cubeVAO, lightingShader, model);
+
+
+
+    // Curvy Upper 
+
+    //curvy ash upper
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(-.1, 2.1, .2));
+    scale = glm::scale(model, glm::vec3(4.7, .3, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+    //right wall
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(4.7, 0.0, 0.0));
+    model = alTogether* translate;
+    wallTrain(cubeVAO, lightingShader, model);
+
+
+    //Bunker Left
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(0.1, 1.6, .2));
+    scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
 
 
     model = glm::mat4(1.0f);
     translate = glm::mat4(1.0f);
-    translate2 = glm::mat4(1.0f);
     scale = glm::mat4(1.0f);
-    
+    translate = glm::translate(model, glm::vec3(0.4, 1.6, .2));
+    scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
 
-    glm::mat4 reflectmatrix = glm::mat4(1.0f);
-    reflectmatrix[2][2] = -1.0f;
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(0.7, 1.6, .2));
+    scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
 
-    translate = glm::translate(model, glm::vec3(0.0, 0, -2.0));
 
-    chair(cubeVAO, lightingShader, alTogether * translate * reflectmatrix);
+    //Bunker Right
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(4.7-0.4, 1.6, .2));
+    scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
 
 
     model = glm::mat4(1.0f);
     translate = glm::mat4(1.0f);
-    translate2 = glm::mat4(1.0f);
     scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(4.7 - 0.4 -0.4, 1.6, .2));
+    scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(4.7 - 0.4-0.7, 1.6, .2));
+    scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
 
 
     
 
-    translate = glm::translate(model, glm::vec3(2.0, 0, -2.0));
 
-    chair(cubeVAO, lightingShader, alTogether * translate * reflectmatrix);
-
-
-
-
-
-
-
-
-    
 
 
 }
@@ -438,7 +543,7 @@ void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 
     scale = glm::scale(model, glm::vec3(1.5, 1.0, .2));
     model = alTogether * scale ;
-    drawCube(cubeVAO, lightingShader, model, 0.545, 0.271, 0.075);
+    drawCube(cubeVAO, lightingShader, model, (float)19/255, (float)42/255, (float)48/255);
 
 
     //Base
@@ -468,7 +573,91 @@ void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 
     translate = glm::translate(model, glm::vec3(1.4, 0.0, 0.0));
     model = alTogether * translate * scale;
-    drawCube(cubeVAO, lightingShader, model, 0.545, 0.271, 0.075);
+    drawCube(cubeVAO, lightingShader, model, 0.945, 0.9294, 0.89411);
+
+}
+
+
+void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
+{
+    //red
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 translate = glm::mat4(1.0f);
+    glm::mat4 scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(-.1, -.4, .2));
+    scale = glm::scale(model, glm::vec3(0.0, .1, -24.2));
+    model = alTogether* translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)233 / 255, (float)28 / 255, (float)25 / 255);
+
+    //ash
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(-.1, -.3, .2));
+    scale = glm::scale(model, glm::vec3(0.0, .2, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+    //red
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(-.1, -.1, .2));
+    scale = glm::scale(model, glm::vec3(0.0, .1, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)233 / 255, (float)28 / 255, (float)25 / 255);
+
+    //green Line
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(-.1, 0.0, .2));
+    scale = glm::scale(model, glm::vec3(0.0, .4, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)18 / 255, (float)129 / 255, (float)11 / 255);
+
+    //green cube
+    float translateFactor = 2.4;
+    for (int i = 0; i < 10; i++)
+    {
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+        translate = glm::translate(model, glm::vec3(-.1, 0.4, .2-i*translateFactor));
+        scale = glm::scale(model, glm::vec3(0.0, 1.4, -.8));
+        model = alTogether * translate * scale;
+        drawCube(cubeVAO, lightingShader, model, (float)18 / 255, (float)129 / 255, (float)11 / 255);
+
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+        translate = glm::translate(model, glm::vec3(-.1, 0.4, .2 - 1.6 - i * translateFactor));
+        scale = glm::scale(model, glm::vec3(0.0, 1.4, -.8));
+        model = alTogether * translate * scale;
+        drawCube(cubeVAO, lightingShader, model, (float)18 / 255, (float)129 / 255, (float)11 / 255);
+
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+        translate = glm::translate(model, glm::vec3(-.1, 1.0, .2 - .8 - i * translateFactor));
+        scale = glm::scale(model, glm::vec3(0.0, .8, -.8));
+        model = alTogether * translate * scale;
+        drawCube(cubeVAO, lightingShader, model, (float)18 / 255, (float)129 / 255, (float)11 / 255);
+    }
+    
+
+    //upper red
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+    translate = glm::translate(model, glm::vec3(-.1, 1.8, .2));
+    scale = glm::scale(model, glm::vec3(0.0, .3, -24.2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)233 / 255, (float)28 / 255, (float)25 / 255);
+
+     
+  
+
 
 }
 
@@ -479,9 +668,9 @@ void drawCube(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model = g
 {
     lightingShader.use();
 
-    lightingShader.setVec3("material.ambient", glm::vec3(r, 0.0, 0.0));
-    lightingShader.setVec3("material.diffuse", glm::vec3(r, 0.0, 0.0));
-    lightingShader.setVec3("material.specular", glm::vec3(1.0f, 0.0f, 0.0f));
+    lightingShader.setVec3("material.ambient", glm::vec3(r, g, b));
+    lightingShader.setVec3("material.diffuse", glm::vec3(r, g, b));
+    lightingShader.setVec3("material.specular", glm::vec3(r, g, b));
     lightingShader.setFloat("material.shininess", 32.0f);
 
     lightingShader.setMat4("model", model);
@@ -567,6 +756,7 @@ void bed(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
     drawCube(cubeVAO, lightingShader, model, 0.545, 0.271, 0.075);
 
 }
+
 
 
 

@@ -295,6 +295,11 @@ int main()
         lightingShader.use();
         lightingShader.setVec3("viewPos", camera.Position);
 
+
+       
+
+
+
         // point light 1
         pointlight1.setUpPointLight(lightingShader);
         // point light 2
@@ -341,13 +346,16 @@ int main()
 
         // we now draw as many light bulbs as we have point lights.
         glBindVertexArray(lightCubeVAO);
-        for (unsigned int i = 0; i < 4; i++)
+        for (unsigned int i = 0; i < 10; i++)
         {
+            glm::mat4 model2 = model;
             model = glm::mat4(1.0f);
-            model = glm::translate(model, pointLightPositions[i]);
-            model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+            model = glm::translate(model, glm::vec3(2.0,1.9,-1.2-2.4*i ));
+            model = glm::scale(model, glm::vec3(.6, .1, .2)); // Make it a smaller cube
+            //model = model2 * model;
             ourShader.setMat4("model", model);
             ourShader.setVec3("color", glm::vec3(0.8f, 0.8f, 0.8f));
+            
             glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
             //glDrawArrays(GL_TRIANGLES, 0, 36);
         }
@@ -518,12 +526,6 @@ void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
     scale = glm::scale(model, glm::vec3(0.09, 0.09, -24.2));
     model = alTogether * translate * scale;
     drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
-
-
-    
-
-
-
 
 }
 
@@ -854,17 +856,17 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
     {
         pointlight1.turnOff();
-        pointlight2.turnOff();
+        /*pointlight2.turnOff();
         pointlight3.turnOff();
-        pointlight4.turnOff();
+        pointlight4.turnOff();*/
 
     }
     if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
     {
         pointlight1.turnOn();
-        pointlight2.turnOn();
+        /*pointlight2.turnOn();
         pointlight3.turnOn();
-        pointlight4.turnOn();
+        pointlight4.turnOn();*/
     }
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
     {
@@ -872,18 +874,18 @@ void processInput(GLFWwindow* window)
         {
             
             pointlight1.turnDiffuseOff();
-            pointlight2.turnDiffuseOff();
+           /* pointlight2.turnDiffuseOff();
             pointlight3.turnDiffuseOff();
-            pointlight4.turnDiffuseOff();
+            pointlight4.turnDiffuseOff();*/
             diffuseToggle = !diffuseToggle;
         }
         else
         {
            
             pointlight1.turnDiffuseOn();
-            pointlight2.turnDiffuseOn();
+            /*pointlight2.turnDiffuseOn();
             pointlight3.turnDiffuseOn();
-            pointlight4.turnDiffuseOn();
+            pointlight4.turnDiffuseOn();*/
             diffuseToggle = !diffuseToggle;
         }
 
@@ -893,20 +895,20 @@ void processInput(GLFWwindow* window)
         if (specularToggle)
         {
             
-            pointlight1.turnSpecularOff();
+            /*pointlight1.turnSpecularOff();
             pointlight2.turnSpecularOff();
             pointlight3.turnSpecularOff();
             pointlight4.turnSpecularOff();
-            specularToggle = !specularToggle;
+            specularToggle = !specularToggle;*/
         }
         else
         {
             
-            pointlight1.turnSpecularOn();
+            /*pointlight1.turnSpecularOn();
             pointlight2.turnSpecularOn();
             pointlight3.turnSpecularOn();
             pointlight4.turnSpecularOn();
-            specularToggle = !specularToggle;
+            specularToggle = !specularToggle;*/
         }
 
 
@@ -914,29 +916,29 @@ void processInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
     {
-        pointlight1.turnAmbientOn();
+        /*pointlight1.turnAmbientOn();
         pointlight2.turnAmbientOn();
         pointlight3.turnAmbientOn();
-        pointlight4.turnAmbientOn();
+        pointlight4.turnAmbientOn();*/
     }
     if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
     {
-        pointlight1.turnDiffuseOn();
+        /*pointlight1.turnDiffuseOn();
         pointlight2.turnDiffuseOn();
         pointlight3.turnDiffuseOn();
-        pointlight4.turnDiffuseOn();
+        pointlight4.turnDiffuseOn();*/
     }
     if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
     {
-        pointlight1.turnSpecularOn();
+        /*pointlight1.turnSpecularOn();
         pointlight2.turnSpecularOn();
         pointlight3.turnSpecularOn();
-        pointlight4.turnSpecularOn();
+        pointlight4.turnSpecularOn();*/
     }
 
     if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
     {
-        pointlight1.ambient = glm::vec3(0.0, 1.0, 0.0);
+        /*pointlight1.ambient = glm::vec3(0.0, 1.0, 0.0);
         pointlight1.diffuse = glm::vec3(0.0, 1.0, 0.0);
         pointlight1.specular = glm::vec3(0.0, 1.0, 0.0);
 
@@ -953,7 +955,7 @@ void processInput(GLFWwindow* window)
 
         pointlight4.ambient = glm::vec3(0.0, 1.0, 0.0);
         pointlight4.diffuse = glm::vec3(0.0, 1.0, 0.0);
-        pointlight4.specular = glm::vec3(0.0, 1.0, 0.0);
+        pointlight4.specular = glm::vec3(0.0, 1.0, 0.0);*/
 
     }
 

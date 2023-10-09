@@ -11,11 +11,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+#include <cmath>
 #include "shader.h"
 #include "camera.h"
 #include "basic_camera.h"
 #include "pointLight.h"
+#include "SpotLight.h"
 
 #include <iostream>
 
@@ -30,6 +31,8 @@ void bed(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
+void platform(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
+
 
 
 
@@ -51,6 +54,11 @@ float translate_Z = 0.0;
 float scale_X = 1.0;
 float scale_Y = 1.0;
 float scale_Z = 1.0;
+float M_PI = 3.1416;
+bool directionLightOn = true;
+float ambientR=.2, ambientG=.2, ambientB=.2;
+
+
 
 // camera
 Camera camera(glm::vec3(0.0f, 1.1f, 5.2f));
@@ -63,27 +71,31 @@ float lookAtX = 0.0, lookAtY = 0.0, lookAtZ = 0.0;
 glm::vec3 V = glm::vec3(0.0f, 1.0f, 0.0f);
 BasicCamera basic_camera(eyeX, eyeY, eyeZ, lookAtX, lookAtY, lookAtZ, V);
 
-
+float pointLightYPos = 1.9, pointLightXPos = 2.1;;
 // positions of the point lights
 glm::vec3 pointLightPositions[] = {
-    glm::vec3(2.2,1.9,-1.2f),
-    glm::vec3(2.2,1.9,-1.2-(2.4*1)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 2)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 3)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 4)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 5)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 6)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 7)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 8)),
-    glm::vec3(2.2,1.9,-1.2 - (2.4 * 9)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2f),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2-(2.4*1)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 2)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 3)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 4)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 5)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 6)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 7)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 8)),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 9)),
     
 };
+
+
+
+float specularR=1.0, specularG=1.0, specularB=1.0;
 PointLight pointlight1(
 
     pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,        // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -94,7 +106,7 @@ PointLight pointlight2(
     pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,            // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -105,7 +117,7 @@ PointLight pointlight3(
     pointLightPositions[2].x, pointLightPositions[2].y, pointLightPositions[2].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,           // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -116,7 +128,7 @@ PointLight pointlight4(
     pointLightPositions[3].x, pointLightPositions[3].y, pointLightPositions[3].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,          // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -128,7 +140,7 @@ PointLight pointlight5(
     pointLightPositions[4].x, pointLightPositions[4].y, pointLightPositions[4].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,            // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -139,7 +151,7 @@ PointLight pointlight6(
     pointLightPositions[5].x, pointLightPositions[5].y, pointLightPositions[5].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,        // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -150,7 +162,7 @@ PointLight pointlight7(
     pointLightPositions[6].x, pointLightPositions[6].y, pointLightPositions[6].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,        // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -161,7 +173,7 @@ PointLight pointlight8(
     pointLightPositions[7].x, pointLightPositions[7].y, pointLightPositions[7].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,         // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -172,7 +184,7 @@ PointLight pointlight9(
     pointLightPositions[8].x, pointLightPositions[8].y, pointLightPositions[8].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,       // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
@@ -183,11 +195,29 @@ PointLight pointlight10(
     pointLightPositions[9].x, pointLightPositions[9].y, pointLightPositions[9].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
     1.0f, 1.0f, 1.0f,     // diffuse
-    1.0f, 1.0f, 1.0f,        // specular
+    specularR, specularG, specularB,       // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
     10       // light number
+);
+
+float spotLightXpos = -1.9-2.7  , spotLightYpos = -.4 +2.0 +1 ;
+glm::vec3 spotPositions[] = {
+    glm::vec3(spotLightXpos,spotLightXpos,-1.2f),
+};
+SpotLight spotlight1(
+    pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z,  // position
+    1.0f, 1.0f, 1.0f,     // ambient
+    1.0f, 1.0f, 1.0f,      // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    1,       // light number
+    glm::cos(glm::radians(20.5f)),
+    glm::cos(glm::radians(25.0f)),
+    0, -1, 0
 );
 
 
@@ -372,6 +402,8 @@ int main()
         lightingShader.setVec3("viewPos", camera.Position);
 
 
+
+
        
 
 
@@ -390,6 +422,21 @@ int main()
        pointlight8.setUpPointLight(lightingShader);
        pointlight9.setUpPointLight(lightingShader);
        pointlight10.setUpPointLight(lightingShader);
+       lightingShader.use();
+
+       
+
+
+       lightingShader.setVec3("directionalLight.directiaon", 0.5f, -3.0f, -3.0f);
+       lightingShader.setVec3("directionalLight.ambient", ambientR, ambientG, ambientB);
+       lightingShader.setVec3("directionalLight.diffuse", .8f, .8f, .8f);
+       lightingShader.setVec3("directionalLight.specular", 1.0f, 1.0f, 1.0f);
+
+
+       lightingShader.setBool("directionLightOn", directionLightOn);
+
+
+       spotlight1.setUpspotLight(lightingShader);
 
         // activate shader
         lightingShader.use();
@@ -421,20 +468,35 @@ int main()
 
         cabin(cubeVAO, lightingShader, model);
 
+        platform(cubeVAO, lightingShader, model);
+
+        //left Platform
+
+        glm::mat4 translate = glm::mat4(1.0f);
+        translate = glm::translate(model, glm::vec3(-4.7*4, 0.0, 0.0));
+        platform(cubeVAO, lightingShader, model*translate);
+
+
         // also draw the lamp object(s)
         ourShader.use();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
+
+        
+
+
+
         // we now draw as many light bulbs as we have point lights.
         glBindVertexArray(lightCubeVAO);
         for (unsigned int i = 0; i < 10; i++)
         {
-            
-           
+                       
             model = glm::mat4(1.0f);
             model = glm::translate(model, pointLightPositions[i]);
+            
             model = glm::scale(model, glm::vec3(.6, .1, .2)); // Make it a smaller cube
+            model = glm::translate(model, glm::vec3(-.5 , -0.1, -0.2));
             model = translateMatrix * rotateXMatrix * rotateYMatrix * rotateZMatrix * scaleMatrix * model;
             ourShader.setMat4("model", model);
             ourShader.setVec3("color", glm::vec3(0.8f, 0.8f, 0.8f));
@@ -442,6 +504,9 @@ int main()
             glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
             //glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+
+        
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -460,6 +525,46 @@ int main()
     // ------------------------------------------------------------------
     glfwTerminate();
     return 0;
+}
+
+
+
+void platform(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
+{
+    glm::mat4 identityMatrix = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 translate = glm::mat4(1.0f);
+    glm::mat4 scale = glm::mat4(1.0f);
+
+    scale = glm::scale(model, glm::vec3(4.7, -1.0, -48.2));
+    translate = glm::translate(model, glm::vec3(4.7, -.4, .2));
+    model = alTogether * translate *scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+    for (int i = 0; i < 5; i++)
+    {
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+
+        scale = glm::scale(model, glm::vec3(1.0, 5.0, -1.0));
+        translate = glm::translate(model, glm::vec3(6.55, -.4, -2.0-(9.2*i)));
+        model = alTogether * translate * scale;
+        drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+    }
+
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+
+    scale = glm::scale(model, glm::vec3(4.7, -1.0, -48.2));
+    translate = glm::translate(model, glm::vec3(4.7, -.4+5.0+1, .2));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+    
+    
+
 }
 
 void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
@@ -613,10 +718,6 @@ void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 }
 
 
-
-
-
-
 void chair(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 {
 
@@ -728,8 +829,7 @@ void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogeth
         scale = glm::scale(model, glm::vec3(0.0, .8, -.8));
         model = alTogether * translate * scale;
         drawCube(cubeVAO, lightingShader, model, (float)18 / 255, (float)129 / 255, (float)11 / 255);
-    }
-    
+    }   
 
     //upper red
     model = glm::mat4(1.0f);
@@ -740,13 +840,7 @@ void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogeth
     model = alTogether * translate * scale;
     drawCube(cubeVAO, lightingShader, model, (float)233 / 255, (float)28 / 255, (float)25 / 255);
 
-     
-  
-
-
 }
-
-
 
 
 void drawCube(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model = glm::mat4(1.0f), float r = 1.0f, float g = 1.0f, float b = 1.0f)
@@ -871,18 +965,18 @@ void processInput(GLFWwindow* window)
         else if (rotateAxis_Y) rotateAngle_Y -= 0.1;
         else rotateAngle_Z -= 0.1;
     }
-    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) translate_Y += 0.001;
-    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) translate_Y -= 0.001;
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) translate_X += 0.001;
-    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) translate_X -= 0.001;
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) translate_Z += 0.001;
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) translate_Z -= 0.001;
-    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) scale_X += 0.001;
-    if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) scale_X -= 0.001;
-    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) scale_Y += 0.001;
-    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) scale_Y -= 0.001;
-    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) scale_Z += 0.001;
-    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) scale_Z -= 0.001;
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) translate_Y += 0.01;
+    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) translate_Y -= 0.01;
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) translate_X += 0.01;
+    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) translate_X -= 0.01;
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) translate_Z += 0.01;
+    //if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) translate_Z -= 0.01;
+    //if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) scale_X += 0.001;
+    //if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) scale_X -= 0.001;
+    //if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) scale_Y += 0.001;
+    //if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) scale_Y -= 0.001;
+    //if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) scale_Z += 0.001;
+    //if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) scale_Z -= 0.001;
 
     if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
     {
@@ -936,87 +1030,93 @@ void processInput(GLFWwindow* window)
         eyeY -= 2.5 * deltaTime;
         basic_camera.changeEye(eyeX, eyeY, eyeZ);
     }
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
     {
         pointlight1.turnOff();
-        /*pointlight2.turnOff();
+        pointlight2.turnOff();
         pointlight3.turnOff();
-        pointlight4.turnOff();*/
+        pointlight4.turnOff();
+        pointlight5.turnOff();
+        pointlight6.turnOff();
+        pointlight7.turnOff();
+        pointlight8.turnOff();
+        pointlight9.turnOff();
+        pointlight10.turnOff();
+
+
+    }
+    if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS)
+    {
+        
+        pointlight1.turnOn();
+        pointlight2.turnOn();
+        pointlight3.turnOn();
+        pointlight4.turnOn();
+        pointlight5.turnOn();
+        pointlight6.turnOn();
+        pointlight7.turnOn();
+        pointlight8.turnOn();
+        pointlight9.turnOn();
+        pointlight10.turnOn();
+    }
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+    {
+        spotlight1.turnOn();
+
+    }
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    {
+        spotlight1.turnOff();
+
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
+    {
+        directionLightOn = !directionLightOn;
+    }
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+    {
+        pointlight1.turnAmbientOn();
+        pointlight2.turnAmbientOn();
+        pointlight3.turnAmbientOn();
+        pointlight4.turnAmbientOn();
+        pointlight5.turnAmbientOn();
+        pointlight6.turnAmbientOn();
+        pointlight7.turnAmbientOn();
+        pointlight8.turnAmbientOn();
+        pointlight9.turnAmbientOn();
+        pointlight10.turnAmbientOn();
+        spotlight1.turnAmbientOn();
 
     }
     if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
     {
-        pointlight1.turnOn();
-        /*pointlight2.turnOn();
-        pointlight3.turnOn();
-        pointlight4.turnOn();*/
+        pointlight1.turnDiffuseOn();
+        pointlight2.turnDiffuseOn();
+        pointlight3.turnDiffuseOn();
+        pointlight4.turnDiffuseOn();
+        pointlight5.turnDiffuseOn();
+        pointlight6.turnDiffuseOn();
+        pointlight7.turnDiffuseOn();
+        pointlight8.turnDiffuseOn();
+        pointlight9.turnDiffuseOn();
+        pointlight10.turnDiffuseOn();
+        spotlight1.turnDiffuseOn();
+
     }
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
     {
-        if (diffuseToggle)
-        {
-            
-            pointlight1.turnDiffuseOff();
-           /* pointlight2.turnDiffuseOff();
-            pointlight3.turnDiffuseOff();
-            pointlight4.turnDiffuseOff();*/
-            diffuseToggle = !diffuseToggle;
-        }
-        else
-        {
-           
-            pointlight1.turnDiffuseOn();
-            /*pointlight2.turnDiffuseOn();
-            pointlight3.turnDiffuseOn();
-            pointlight4.turnDiffuseOn();*/
-            diffuseToggle = !diffuseToggle;
-        }
-
-    }
-    if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
-    {
-        if (specularToggle)
-        {
-            
-            /*pointlight1.turnSpecularOff();
-            pointlight2.turnSpecularOff();
-            pointlight3.turnSpecularOff();
-            pointlight4.turnSpecularOff();
-            specularToggle = !specularToggle;*/
-        }
-        else
-        {
-            
-            /*pointlight1.turnSpecularOn();
-            pointlight2.turnSpecularOn();
-            pointlight3.turnSpecularOn();
-            pointlight4.turnSpecularOn();
-            specularToggle = !specularToggle;*/
-        }
-
-
-        
-    }
-    if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
-    {
-        /*pointlight1.turnAmbientOn();
-        pointlight2.turnAmbientOn();
-        pointlight3.turnAmbientOn();
-        pointlight4.turnAmbientOn();*/
-    }
-    if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
-    {
-        /*pointlight1.turnDiffuseOn();
-        pointlight2.turnDiffuseOn();
-        pointlight3.turnDiffuseOn();
-        pointlight4.turnDiffuseOn();*/
-    }
-    if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
-    {
-        /*pointlight1.turnSpecularOn();
+        pointlight1.turnSpecularOn();
         pointlight2.turnSpecularOn();
         pointlight3.turnSpecularOn();
-        pointlight4.turnSpecularOn();*/
+        pointlight4.turnSpecularOn();
+        pointlight5.turnSpecularOn();
+        pointlight6.turnSpecularOn();
+        pointlight7.turnSpecularOn();
+        pointlight8.turnSpecularOn();
+        pointlight9.turnSpecularOn();
+        pointlight10.turnSpecularOn();
+        spotlight1.turnSpecularOn();
     }
 
     if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)

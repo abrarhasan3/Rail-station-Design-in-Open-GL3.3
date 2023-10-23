@@ -146,8 +146,10 @@ vec3 CalcSpotLight(Material material, SpotLight light, vec3 N, vec3 fragPos, vec
     float attenuation = 1.0 / (light.k_c + light.k_l * d + light.k_q * (d * d));
 
     float cos_alpha = dot(L, normalize(-light.direction));
-    float cos_theta = light.inner_circle - light.outer_circle;
-    float intensity = clamp((cos_alpha-light.outer_circle)/cos_theta, 0.0, 1.0);
+    float cos_theta = light.inner_circle- light.outer_circle;
+    
+
+    float intensity = clamp((cos_alpha-light.outer_circle)/cos_theta, 0.0, 1.0);   
     
     vec3 ambient = K_A * light.ambient;
     vec3 diffuse = K_D * max(dot(N, L), 0.0) * light.diffuse;

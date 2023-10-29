@@ -17,6 +17,8 @@
 #include "basic_camera.h"
 #include "pointLight.h"
 #include "SpotLight.h"
+#include "sphere.h"
+#include "cylinder.h"
 
 #include <iostream>
 
@@ -34,7 +36,7 @@ void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogeth
 void platform(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void door(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void frame(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
-
+void drawtri(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model, float r, float g, float b);
 
 
 
@@ -56,6 +58,9 @@ float scale_X = 1.0;
 float scale_Y = 1.0;
 float scale_Z = 1.0;
 float M_PI = 3.1416;
+int n;
+float pi = 3.1416;
+
 bool directionLightOn = true;
 float ambientR=.2, ambientG=.2, ambientB=.2;
 
@@ -338,6 +343,118 @@ int main()
         22, 23, 20
     };
 
+
+    //vector<float> circVer;
+    //vector<unsigned int> circInd;
+    //float r1 = 4, r2 = 3.5, x1, y1, z1, x2, y2, z2, x3, y3, z3;
+    //float theta = 25, c = 0, t = 6, k = 2 * pi;
+    //int steps = 100, i;
+    ////float total = (((155 - 25) * 3.1416) / 180) / steps;
+    //float angle = 3.1416 * 2.0 / steps, starting = 26;
+    //for (i = 0; i < steps; i++) {
+    //    x1 = r2 * cosf(starting + angle * i);
+    //    y1 = r2 * sinf(starting + angle * i);
+    //    z1 = 0.0;
+    //    circVer.push_back(x1);
+    //    circVer.push_back(y1);
+    //    circVer.push_back(z1);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(1.0);
+
+    //    circInd.push_back(c);
+
+    //    c++;
+    //    x2 = r1 * cosf(starting + angle * i);
+    //    y2 = r1 * sinf(starting + angle * i);
+    //    z2 = 0.0;
+    //    circVer.push_back(x2);
+    //    circVer.push_back(y2);
+    //    circVer.push_back(z2);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(1.0);
+
+    //    circInd.push_back(c);
+
+    //    c++;
+    //    x3 = r1 * cosf(starting + angle * (i + 1));
+    //    y3 = r1 * sinf(starting + angle * (i + 1));
+    //    z3 = 0.0;
+    //    circVer.push_back(x3);
+    //    circVer.push_back(y3);
+    //    circVer.push_back(z3);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(1.0);
+
+    //    circInd.push_back(c);
+
+    //    //2nd tri
+    //    x1 = r2 * cosf(starting + angle * i);
+    //    y1 = r2 * sinf(starting + angle * i);
+    //    z1 = 0.0;
+    //    circVer.push_back(x1);
+    //    circVer.push_back(y1);
+    //    circVer.push_back(z1);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(1.0);
+
+    //    circInd.push_back(c);
+
+    //    c++;
+    //    x2 = r2 * cosf(starting + angle * (i + 1));
+    //    y2 = r2 * sinf(starting + angle * (i + 1));
+    //    z2 = 0.0;
+    //    circVer.push_back(x2);
+    //    circVer.push_back(y2);
+    //    circVer.push_back(z2);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(1.0);
+
+    //    circInd.push_back(c);
+
+    //    c++;
+    //    x3 = r1 * cosf(starting + angle * (i + 1));
+    //    y3 = r1 * sinf(starting + angle * (i + 1));
+    //    z3 = 0.0;
+    //    circVer.push_back(x3);
+    //    circVer.push_back(y3);
+    //    circVer.push_back(z3);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(0.0);
+    //    circVer.push_back(1.0);
+
+    //    circInd.push_back(c);
+    //}
+    //n = circVer.size();
+    //unsigned int signVAO, signVBO, signEBO;
+    //glGenVertexArrays(1, &signVAO);
+    //glGenBuffers(1, &signVBO);
+    //glGenBuffers(1, &signEBO);
+
+    //glBindVertexArray(signVAO);
+
+    //glBindBuffer(GL_ARRAY_BUFFER, signVBO);
+    //glBufferData(GL_ARRAY_BUFFER, circVer.size(), circVer.data(), GL_STATIC_DRAW);
+
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, signEBO);
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, circInd.size(), circInd.data(), GL_STATIC_DRAW);
+
+
+    //// position attribute
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 6 * sizeof(float), (void*)0);
+    //glEnableVertexAttribArray(0);
+
+    //// vertex normal attribute
+    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)12);
+    //glEnableVertexAttribArray(1);
+
+
+
+
     unsigned int cubeVAO, cubeVBO, cubeEBO;
     glGenVertexArrays(1, &cubeVAO);
     glGenBuffers(1, &cubeVBO);
@@ -376,6 +493,9 @@ int main()
 
 
 
+
+    Cylinder sphere = Cylinder();
+  
     //ourShader.use();
     //lightingShader.use();
 
@@ -401,6 +521,8 @@ int main()
         // be sure to activate shader when setting uniforms/drawing objects
         lightingShader.use();
         lightingShader.setVec3("viewPos", camera.Position);
+
+
 
 
 
@@ -463,6 +585,14 @@ int main()
         model = translateMatrix * rotateXMatrix * rotateYMatrix * rotateZMatrix * scaleMatrix;
         lightingShader.setMat4("model", model);
 
+
+        
+        glm::mat4 modelForSphere = glm::mat4(1.0f);
+        
+        sphere.drawSphere(lightingShader, modelForSphere* glm::scale(model, glm::vec3(.5,.07, .5)) *glm::translate(model, glm::vec3(-1.9, -5.0, -0.5)));
+
+
+        //drawtri(signVAO, lightingShader, model* glm::translate(model, glm::vec3(-1.5, 0.0, -0.5)) /* * glm::scale(model, glm::vec3(10.0, 1.0, 20.0))*/, 0.945, 0.98, 0.157);
         //glBindVertexArray(cubeVAO);
         //glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
         //glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -1117,6 +1247,21 @@ void drawCube(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model = g
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 }
 
+void drawtri(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model = glm::mat4(1.0f), float r = 1.0f, float g = 1.0f, float b = 1.0f)
+{
+    lightingShader.use();
+
+    lightingShader.setVec3("material.ambient", glm::vec3(r, g, b));
+    lightingShader.setVec3("material.diffuse", glm::vec3(r, g, b));
+    lightingShader.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+    lightingShader.setFloat("material.shininess", 32.0f);
+
+    lightingShader.setMat4("model", model);
+
+    glBindVertexArray(cubeVAO);
+    glDrawElements(GL_TRIANGLES, n, GL_UNSIGNED_INT, 0);
+}
+
 void bed(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 {
     float baseHeight = 0.3;
@@ -1436,6 +1581,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
+
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------

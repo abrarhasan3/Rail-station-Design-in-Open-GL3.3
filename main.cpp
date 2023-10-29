@@ -19,6 +19,7 @@
 #include "SpotLight.h"
 #include "sphere.h"
 #include "cylinder.h"
+#include "wheel.h"
 
 #include <iostream>
 
@@ -495,6 +496,7 @@ int main()
 
 
     Cylinder sphere = Cylinder();
+    Wheel wheel = Wheel();
   
     //ourShader.use();
     //lightingShader.use();
@@ -587,15 +589,12 @@ int main()
 
 
         
-        glm::mat4 modelForSphere = glm::mat4(1.0f);
+      
         
-        sphere.drawSphere(lightingShader, modelForSphere* glm::scale(model, glm::vec3(.5,.07, .5)) *glm::translate(model, glm::vec3(-1.9, -5.0, -0.5)));
+        wheel.drawWheel(lightingShader, model* glm::scale(identityMatrix, glm::vec3(.1,.01, .1))* glm::translate(identityMatrix, glm::vec3(-3.9, -5.0, -0.5)));
+        //wheel.drawSphere(lightingShader, modelForSphere * glm::scale(model, glm::vec3(1, .07*2, 1)) * glm::translate(model, glm::vec3(-1.9, -5.0, -0.5)));
 
-
-        //drawtri(signVAO, lightingShader, model* glm::translate(model, glm::vec3(-1.5, 0.0, -0.5)) /* * glm::scale(model, glm::vec3(10.0, 1.0, 20.0))*/, 0.945, 0.98, 0.157);
-        //glBindVertexArray(cubeVAO);
-        //glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-        //glDrawArrays(GL_TRIANGLES, 0, 36);
+   
 
         cabin(cubeVAO, lightingShader, model);
 

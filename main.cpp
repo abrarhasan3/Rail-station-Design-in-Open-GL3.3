@@ -7,7 +7,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
+#define STB_IMAGE_IMPLEMENTATION
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -20,6 +20,8 @@
 #include "sphere.h"
 #include "cylinder.h"
 #include "wheel.h"
+#include "cube.h"
+#include "stb_image.h"
 
 #include <iostream>
 
@@ -37,7 +39,9 @@ void wallTrain(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogeth
 void platform(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void door(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void frame(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
-void drawtri(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model, float r, float g, float b);
+
+void tex(Shader& lightingShader, glm::mat4 alTogether);
+unsigned int loadTexture(char const* path, GLenum textureWrappingModeS, GLenum textureWrappingModeT, GLenum textureFilteringModeMin, GLenum textureFilteringModeMax);
 
 
 
@@ -286,11 +290,14 @@ int main()
     // build and compile our shader zprogram
     // ------------------------------------
     Shader lightingShader("vertexShaderForPhongShading.vs", "fragmentShaderForPhongShading.fs");
+    Shader lightingShaderWithTexture("vertexShaderForPhongShadingWithTexture.vs", "fragmentShaderForPhongShadingWithTexture.fs");
     //Shader lightingShader("vertexShaderForGouraudShading.vs", "fragmentShaderForGouraudShading.fs");
     Shader ourShader("vertexShader.vs", "fragmentShader.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
+   
+
 
     float cube_vertices[] = {
         // positions      // normals
@@ -589,16 +596,15 @@ int main()
 
 
         
-      
-        
+       
         wheel.drawWheel(lightingShader, model* glm::scale(identityMatrix, glm::vec3(.1,.01, .1))* glm::translate(identityMatrix, glm::vec3(-3.9, -5.0, -0.5)));
         //wheel.drawSphere(lightingShader, modelForSphere * glm::scale(model, glm::vec3(1, .07*2, 1)) * glm::translate(model, glm::vec3(-1.9, -5.0, -0.5)));
 
    
-
+ 
         cabin(cubeVAO, lightingShader, model);
 
-        platform(cubeVAO, lightingShader, model);
+        //platform(cubeVAO, lightingShader, model);
 
         //left Platform
 
@@ -608,6 +614,8 @@ int main()
 
         door(cubeVAO, lightingShader, model);
 
+
+        
 
 
         // also draw the lamp object(s)
@@ -638,8 +646,70 @@ int main()
             //glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
+        
+        lightingShaderWithTexture.use();
+        // point light 1
+        pointlight1.setUpPointLight(lightingShaderWithTexture);
+        // point light 2
+        pointlight2.setUpPointLight(lightingShaderWithTexture);
+        // point light 3
+        pointlight3.setUpPointLight(lightingShaderWithTexture);
+        // point light 4
+        pointlight4.setUpPointLight(lightingShaderWithTexture);
+        pointlight5.setUpPointLight(lightingShaderWithTexture);
+        pointlight6.setUpPointLight(lightingShaderWithTexture);
+        pointlight7.setUpPointLight(lightingShaderWithTexture);
+        pointlight8.setUpPointLight(lightingShaderWithTexture);
+        pointlight9.setUpPointLight(lightingShaderWithTexture);
+        pointlight10.setUpPointLight(lightingShaderWithTexture);
+
+        lightingShaderWithTexture.use();
+        lightingShaderWithTexture.setVec3("viewPos", camera.Position);
+
+        // pass projection matrix to shader (note that in this case it could change every frame)
+        glm::mat4 projection1 = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        //glm::mat4 projection = glm::ortho(-2.0f, +2.0f, -1.5f, +1.5f, 0.1f, 100.0f);
+        lightingShaderWithTexture.setMat4("projection", projection1);
+
+        // camera/view transformation
+        glm::mat4 view1 = camera.GetViewMatrix();
+        //glm::mat4 view = basic_camera.createViewMatrix();
+        lightingShaderWithTexture.setMat4("view", view1);
+
 
         
+
+        
+
+        glm::mat4 modelMatrixForContainer = glm::mat4(1.0f), mtranslateMatrix, mrotateXMatrix, mrotateYMatrix, mrotateZMatrix, mscaleMatrix;
+        //modelMatrixForContainer = glm::translate(model, glm::vec3(-0.5f, -0.5f, -0.5f));
+        mtranslateMatrix = glm::translate(identityMatrix, glm::vec3(translate_X, translate_Y, translate_Z));
+        mrotateXMatrix = glm::rotate(identityMatrix, glm::radians(rotateAngle_X), glm::vec3(1.0f, 0.0f, 0.0f));
+        mrotateYMatrix = glm::rotate(identityMatrix, glm::radians(rotateAngle_Y), glm::vec3(0.0f, 1.0f, 0.0f));
+        mrotateZMatrix = glm::rotate(identityMatrix, glm::radians(rotateAngle_Z), glm::vec3(0.0f, 0.0f, 1.0f));
+        mscaleMatrix = glm::scale(identityMatrix, glm::vec3(scale_X, scale_Y, scale_Z));
+        modelMatrixForContainer = mtranslateMatrix * mrotateXMatrix * mrotateYMatrix * mrotateZMatrix * mscaleMatrix;
+        
+        tex(lightingShaderWithTexture, modelMatrixForContainer);
+        
+        
+
+        string diffuseMapPath2 = "nmu.jpeg";
+        string specularMapPath2 = "nmu.jpeg";
+
+        //platform(lightingShader, modelMatrixForContainer);
+
+        unsigned int diffMap2 = loadTexture(diffuseMapPath2.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+        unsigned int specMap2 = loadTexture(specularMapPath2.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+        Cube cube2 = Cube(diffMap2, specMap2, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+        glm::mat4 modelMatrixForContainer2 = glm::mat4(1.0f);
+        glm::mat4 modeltranslate = glm::translate(identityMatrix, glm::vec3(4.65, .4, 0.0));
+        glm::mat4 scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(0.0, .3, .3));
+
+        cube2.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate* scale);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -659,6 +729,57 @@ int main()
     glfwTerminate();
     return 0;
 }
+
+
+void tex (Shader& lightingShader, glm::mat4 alTogether)
+{
+    string diffuseMapPath = "mosaic.jpg";
+    string specularMapPath = "mosaic.jpg";
+
+
+    unsigned int diffMap = loadTexture(diffuseMapPath.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap = loadTexture(specularMapPath.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube = Cube(diffMap, specMap, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+    
+
+
+    glm::mat4 identityMatrix = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 translate = glm::mat4(1.0f);
+    glm::mat4 scale = glm::mat4(1.0f);
+
+    scale = glm::scale(model, glm::vec3(4.7, -1.0, -48.2));
+    translate = glm::translate(model, glm::vec3(4.7, -.4, .2));
+    model = alTogether * translate * scale;
+    cube.drawCubeWithTexture(lightingShader, model);
+
+    for (int i = 0; i < 5; i++)
+    {
+        model = glm::mat4(1.0f);
+        translate = glm::mat4(1.0f);
+        scale = glm::mat4(1.0f);
+
+        scale = glm::scale(model, glm::vec3(1.0, 5.0, -1.0));
+        translate = glm::translate(model, glm::vec3(6.55, -.4, -2.0 - (9.2 * i)));
+        model = alTogether * translate * scale;
+        cube.drawCubeWithTexture(lightingShader, model);
+    }
+
+    model = glm::mat4(1.0f);
+    translate = glm::mat4(1.0f);
+    scale = glm::mat4(1.0f);
+
+    scale = glm::scale(model, glm::vec3(4.7, -1.0, -48.2));
+    translate = glm::translate(model, glm::vec3(4.7, -.4 + 5.0 + 1, .2));
+    model = alTogether * translate * scale;
+    cube.drawCubeWithTexture(lightingShader, model);
+
+
+}
+
+
+
 
 void door(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 {
@@ -1246,21 +1367,6 @@ void drawCube(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model = g
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 }
 
-void drawtri(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 model = glm::mat4(1.0f), float r = 1.0f, float g = 1.0f, float b = 1.0f)
-{
-    lightingShader.use();
-
-    lightingShader.setVec3("material.ambient", glm::vec3(r, g, b));
-    lightingShader.setVec3("material.diffuse", glm::vec3(r, g, b));
-    lightingShader.setVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-    lightingShader.setFloat("material.shininess", 32.0f);
-
-    lightingShader.setMat4("model", model);
-
-    glBindVertexArray(cubeVAO);
-    glDrawElements(GL_TRIANGLES, n, GL_UNSIGNED_INT, 0);
-}
-
 void bed(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
 {
     float baseHeight = 0.3;
@@ -1587,4 +1693,41 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
+}
+unsigned int loadTexture(char const* path, GLenum textureWrappingModeS, GLenum textureWrappingModeT, GLenum textureFilteringModeMin, GLenum textureFilteringModeMax)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+
+    int width, height, nrComponents;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
+    if (data)
+    {
+        GLenum format;
+        if (nrComponents == 1)
+            format = GL_RED;
+        else if (nrComponents == 3)
+            format = GL_RGB;
+        else if (nrComponents == 4)
+            format = GL_RGBA;
+
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, textureWrappingModeS);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, textureWrappingModeT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, textureFilteringModeMin);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, textureFilteringModeMax);
+
+        stbi_image_free(data);
+    }
+    else
+    {
+        std::cout << "Texture failed to load at path: " << path << std::endl;
+        stbi_image_free(data);
+    }
+
+    return textureID;
 }

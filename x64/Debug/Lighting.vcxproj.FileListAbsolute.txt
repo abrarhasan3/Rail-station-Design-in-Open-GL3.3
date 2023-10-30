@@ -4,3 +4,4 @@ C:\Users\HP\Desktop\Lab 3\Lighting Student Version\x64\Debug\Lighting.exe
 F:\academic\4-2\1. LAB FILES\AAA\Lab 3\Lighting Student Version\x64\Debug\Lighting.exe
 F:\academic\4-2\Project\Lighting Student Version\x64\Debug\Lighting.exe
 F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3\x64\Debug\Lighting.exe
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\x64\Debug\Lighting.exe

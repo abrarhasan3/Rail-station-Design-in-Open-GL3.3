@@ -38,6 +38,12 @@
     <ClInclude Include="SpotLight.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertexShader.vs" />
@@ -46,5 +52,7 @@
     <None Include="fragmentShaderForPhongShading.fs" />
     <None Include="vertexShaderForGouraudShading.vs" />
     <None Include="fragmentShaderForGouraudShading.fs" />
+    <None Include="fragmentShaderForPhongShadingWithTexture.fs" />
+    <None Include="vertexShaderForPhongShadingWithTexture.vs" />
   </ItemGroup>
 </Project>

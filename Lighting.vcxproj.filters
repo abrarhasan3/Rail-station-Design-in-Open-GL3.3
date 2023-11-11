@@ -47,6 +47,9 @@
     <ClInclude Include="cylinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="semiCylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertexShader.vs" />

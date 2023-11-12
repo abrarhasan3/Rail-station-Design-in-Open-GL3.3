@@ -45,7 +45,7 @@ bool on;
 };
 
 
-#define NR_POINT_LIGHTS 4
+#define NR_POINT_LIGHTS 11
 #define NR_SPOT_LIGHTS 1
 
 in vec3 FragPos;

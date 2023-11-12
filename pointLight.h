@@ -128,7 +128,7 @@ public:
             lightingShader.setFloat("pointLights[8].k_l", k_l);
             lightingShader.setFloat("pointLights[8].k_q", k_q);
         }
-        else
+        else if (lightNumber == 10)
         {
             lightingShader.setVec3("pointLights[9].position", position);
             lightingShader.setVec3("pointLights[9].ambient", ambientOn * ambient);
@@ -136,7 +136,17 @@ public:
             lightingShader.setVec3("pointLights[9].specular", specularOn * specular);
             lightingShader.setFloat("pointLights[9].k_c", k_c);
             lightingShader.setFloat("pointLights[9].k_l", k_l);
-            lightingShader.setFloat("pointLights[9].k_q", k_q);            
+            lightingShader.setFloat("pointLights[9].k_q", k_q);
+        }
+        else
+        {
+            lightingShader.setVec3("pointLights[10].position", position);
+            lightingShader.setVec3("pointLights[10].ambient", ambientOn * ambient);
+            lightingShader.setVec3("pointLights[10].diffuse", diffuseOn * diffuse);
+            lightingShader.setVec3("pointLights[10].specular", specularOn * specular);
+            lightingShader.setFloat("pointLights[10].k_c", k_c);
+            lightingShader.setFloat("pointLights[10].k_l", k_l);
+            lightingShader.setFloat("pointLights[10].k_q", k_q);            
         }
     }
     void turnOff()

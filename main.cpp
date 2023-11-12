@@ -41,6 +41,7 @@ void platform(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogethe
 void door(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void frame(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 void drawdoor(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
+void boundary(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 unsigned int loadTexture(char const* path, GLenum textureWrappingModeS, GLenum textureWrappingModeT, GLenum textureFilteringModeMin, GLenum textureFilteringModeMax);
 
 
@@ -74,7 +75,7 @@ float ambientR=.2, ambientG=.2, ambientB=.2;
 
 
 // camera
-Camera camera(glm::vec3(-3.0f, 1.1f, 30.2f));
+Camera camera(glm::vec3(-3.0f, 1.1f, 50.2f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -97,6 +98,8 @@ glm::vec3 pointLightPositions[] = {
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 7) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 8) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 9) + moveZ),
+    glm::vec3(-14.0,4.7,31.5)
+
     
 };
 
@@ -213,6 +216,18 @@ PointLight pointlight10(
     0.09f,  //k_l
     0.032f, //k_q
     10       // light number
+);
+
+PointLight pointlight11(
+
+    pointLightPositions[10].x, pointLightPositions[10].y, pointLightPositions[10].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    1.0f, 1.0f, 1.0f,     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    11       // light number
 );
 
 float spotLightXpos = -1.9-2.7  , spotLightYpos = -.4 +2.0 +1 ;
@@ -469,6 +484,14 @@ int main()
     Cube cube9 = Cube(diffMap9, specMap9, 32.0f, 0.0f, 0.0f, 9.0f, 3.0f);
     
 
+    string diffuseMapPath10 = "marbel0.jpg";
+    string specularMapPath10 = "marbel0.jpg";
+
+    unsigned int diffMap10 = loadTexture(diffuseMapPath10.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap10= loadTexture(specularMapPath10.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube10 = Cube(diffMap10, specMap10, 32.0f, 0.0f, 0.0f, 15.0f, 15.0f);
+
+
     semiCylinder semicylinder = semiCylinder(1.0f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
 
 
@@ -525,13 +548,14 @@ int main()
        pointlight8.setUpPointLight(lightingShader);
        pointlight9.setUpPointLight(lightingShader);
        pointlight10.setUpPointLight(lightingShader);
+       pointlight11.setUpPointLight(lightingShader);
        lightingShader.use();
 
        
 
 
        lightingShader.setVec3("directionalLight.directiaon", 0.5f, -3.0f, -3.0f);
-       lightingShader.setVec3("directionalLight.ambient", ambientR, ambientG, ambientB);
+       lightingShader.setVec3("directionalLight.ambient", .5f, .5f, .5f);
        lightingShader.setVec3("directionalLight.diffuse", .8f, .8f, .8f);
        lightingShader.setVec3("directionalLight.specular", 1.0f, 1.0f, 1.0f);
 
@@ -688,7 +712,7 @@ int main()
 
         //ticket_counter(cubeVAO, lightingShader, model);
 
-
+        boundary(cubeVAO, lightingShader, model );
 
         
 
@@ -799,7 +823,7 @@ int main()
 
         // we now draw as many light bulbs as we have point lights.
         glBindVertexArray(lightCubeVAO);
-        for (unsigned int i = 0; i < 10; i++)
+        for (unsigned int i = 0; i < 11; i++)
         {
                        
             model = glm::mat4(1.0f);
@@ -831,6 +855,7 @@ int main()
         pointlight8.setUpPointLight(lightingShaderWithTexture);
         pointlight9.setUpPointLight(lightingShaderWithTexture);
         pointlight10.setUpPointLight(lightingShaderWithTexture);
+        pointlight11.setUpPointLight(lightingShaderWithTexture);
 
 
         lightingShaderWithTexture.setVec3("directionalLight.directiaon", 0.5f, -3.0f, -3.0f);
@@ -1191,7 +1216,7 @@ int main()
         modelMatrixForContainer2 = glm::mat4(1.0f);
         modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, 4.7, 15.0));
         scale = glm::mat4(1.0f);
-        scale = glm::scale(identityMatrix, glm::vec3(25.0, .3, 10.0));
+        scale = glm::scale(identityMatrix, glm::vec3(25.0, .3, 10.0+3.5));
         cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
 
 
@@ -1342,7 +1367,57 @@ int main()
         cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
 
 
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0,-1.0, 25.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(25, .3, 20.0));
+        cube10.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
 
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, 4.7, 28.6));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(0.1, 1, 1.0));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
+        
+
+        //Roof of Ticket counter
+
+        for (int j = 0; j < 20; j++)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                modelMatrixForContainer2 = glm::mat4(1.0f);
+                modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0 + i, 4.7, 28.5+j));
+                scale = glm::mat4(1.0f);
+                scale = glm::scale(identityMatrix, glm::vec3(1.0, 1, .1));
+                cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+                modelMatrixForContainer2 = glm::mat4(1.0f);
+                modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0 + i, 5.7, 28.5 + j));
+                scale = glm::mat4(1.0f);
+                scale = glm::scale(identityMatrix, glm::vec3(1.0, 0.1, 1.0));
+                cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+                modelMatrixForContainer2 = glm::mat4(1.0f);
+                modeltranslate = glm::translate(identityMatrix, glm::vec3(-14.0 + i, 4.7, 28.6 + j));
+                scale = glm::mat4(1.0f);
+                scale = glm::scale(identityMatrix, glm::vec3(0.1, 1, 1.0));
+                cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+                modelMatrixForContainer2 = glm::mat4(1.0f);
+                modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0 + i, 4.7, 29.5 + j));
+                scale = glm::mat4(1.0f);
+                scale = glm::scale(identityMatrix, glm::vec3(1.0, 1, .1));
+                cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+            }
+
+        }
+        
+
+        
 
        
         
@@ -1375,6 +1450,68 @@ void ticket_counter(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alT
 {
 
 }
+void boundary(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
+{
+    for (int i = 0; i < 7; i++)
+    {
+        glm::mat4  translateP = glm::mat4(1.0f);
+        glm::mat4 identityMatrix = glm::mat4(1.0f);
+        glm::mat4  scaleP = glm::mat4(1.0f);
+
+        scaleP = glm::scale(identityMatrix, glm::vec3(.1, .07, -0.1));
+        translateP = glm::translate(identityMatrix, glm::vec3(8.0, -0.7, 44.7-i*0.3));
+
+
+        Cylinder c = Cylinder(0.65f, 36, 18, glm::vec3((float)255 / 255, (float)89 / 255, (float)0.0 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
+        c.drawSphere(lightingShader, alTogether * translateP * scaleP);
+
+    }
+
+    for (int i = 0; i < 7; i++)
+    {
+        glm::mat4 identityMatrix = glm::mat4(1.0f);
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 translate = glm::mat4(1.0f);
+        glm::mat4 scale = glm::mat4(1.0f);
+
+        scale = glm::scale(identityMatrix, glm::vec3(2.0, .05, -0.1));
+        translate = glm::translate(identityMatrix, glm::vec3(6.0, 0.5+i*.3, 45.1));
+        model = alTogether * translate * scale;
+        drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)213 / 255, (float)46 / 255);
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        glm::mat4 identityMatrix = glm::mat4(1.0f);
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 translate = glm::mat4(1.0f);
+        glm::mat4 scale = glm::mat4(1.0f);
+
+        scale = glm::scale(identityMatrix, glm::vec3(.1, 2.0, -0.1));
+        translate = glm::translate(identityMatrix, glm::vec3(6.5+i, 0.5, 45.1));
+        model = alTogether * translate * scale;
+        drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)213 / 255, (float)46 / 255);
+    }
+
+
+
+    
+   
+
+
+   /* glm::mat4 identityMatrix = glm::mat4(1.0f);
+    glm::mat4 modelCube = glm::mat4(1.0f);
+    glm::mat4 translateCube = glm::mat4(1.0f);
+    glm::mat4 scaleCube = glm::mat4(1.0f);
+    translateCube = glm::translate(identityMatrix, glm::vec3(-13.5, 1.5, 25.0));
+    scaleCube = glm::scale(identityMatrix, glm::vec3(3.0, -2.2, -0.1));;
+    modelCube = translateCube * scaleCube;
+    drawCube(cubeVAO, lightingShader, alTogether * modelCube, (float)3 / 255, (float)127 / 255, (float)243 / 255);*/
+
+    
+
+}
+
 
 
 void drawdoor(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)

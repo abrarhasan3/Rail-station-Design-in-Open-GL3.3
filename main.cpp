@@ -23,6 +23,8 @@
 #include "cube.h"
 #include "stb_image.h"
 #include "semiCylinder.h"
+#include "sphere.h"
+
 
 #include <iostream>
 
@@ -75,7 +77,7 @@ float ambientR=.2, ambientG=.2, ambientB=.2;
 
 
 // camera
-Camera camera(glm::vec3(-3.0f, 1.1f, 50.2f));
+Camera camera(glm::vec3(8.0f, 1.1f, 50.2f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -491,6 +493,63 @@ int main()
     unsigned int specMap10= loadTexture(specularMapPath10.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
     Cube cube10 = Cube(diffMap10, specMap10, 32.0f, 0.0f, 0.0f, 15.0f, 15.0f);
 
+    string diffuseMapPath11 = "counter1.png";
+    string specularMapPath11 = "counter1.png";
+
+    unsigned int diffMap11 = loadTexture(diffuseMapPath11.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap11 = loadTexture(specularMapPath11.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube11 = Cube(diffMap11, specMap11, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+    string diffuseMapPath12 = "counter2.jpg";
+    string specularMapPath12 = "counter2.jpg";
+
+    unsigned int diffMap12 = loadTexture(diffuseMapPath12.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap12 = loadTexture(specularMapPath12.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube12 = Cube(diffMap12, specMap12, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+    string diffuseMapPath13 = "counter3.jpg";
+    string specularMapPath13 = "counter3.jpg";
+
+    unsigned int diffMap13 = loadTexture(diffuseMapPath13.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap13 = loadTexture(specularMapPath13.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube13 = Cube(diffMap13, specMap13, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+    string diffuseMapPath14 = "counter4.jpg";
+    string specularMapPath14 = "counter4.jpg";
+
+    unsigned int diffMap14 = loadTexture(diffuseMapPath14.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap14 = loadTexture(specularMapPath14.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube14 = Cube(diffMap14, specMap14, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+    string diffuseMapPath15 = "fare.png";
+    string specularMapPath15 = "fare.png";
+
+    unsigned int diffMap15 = loadTexture(diffuseMapPath15.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap15 = loadTexture(specularMapPath15.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube15 = Cube(diffMap15, specMap15, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+
+    string diffuseMapPath16 = "no_smoking.png";
+    string specularMapPath16 = "no_smoking.png";
+
+    unsigned int diffMap16 = loadTexture(diffuseMapPath16.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap16 = loadTexture(specularMapPath16.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube16 = Cube(diffMap16, specMap16, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
+    string diffuseMapPath17 = "whitedoor.jpg";
+    string specularMapPath17 = "whitedoor.jpg";
+
+    unsigned int diffMap17 = loadTexture(diffuseMapPath17.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap17 = loadTexture(specularMapPath17.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube17 = Cube(diffMap17, specMap17, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+
+
 
     semiCylinder semicylinder = semiCylinder(1.0f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
 
@@ -712,7 +771,16 @@ int main()
 
         //ticket_counter(cubeVAO, lightingShader, model);
 
-        boundary(cubeVAO, lightingShader, model );
+
+        for(int i=0;i<4;i++)
+        {
+            translate = glm::mat4(1.0f);
+            translate = glm::translate(identityMatrix, glm::vec3(-4.0*i, 0.0, 0.0));
+            boundary(cubeVAO, lightingShader, model* translate);
+
+        }
+
+        
 
         
 
@@ -1415,18 +1483,107 @@ int main()
             }
 
         }
-        
 
-        
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, -1.0, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(25, 1.5, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(8.0, 0.5, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(2.0, 2.1, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(8.0-4.0, 0.5, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(2.0, 2.1, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(8.0 - 4.0*2, 0.5, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(2.0, 2.1, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(8.0 - 4.0 * 3, 0.5, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(2.0, 2.1, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15, 0.5, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(9.0, 2.1, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15, 0.5+2.1, 45.125));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(25.0, 1.9, -.25));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(6.0, 2.7, 44.8));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(1.5, 0.7, 0.0));
+        cube11.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(6.0-4.0, 2.7, 44.8));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(1.5, 0.7, 0.0));
+        cube12.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(6.0-8.0, 2.7, 44.8));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(1.5, 0.7, 0.0));
+        cube13.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(6.0 - 12.0, 2.7, 44.8));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(1.5, 0.7, 0.0));
+        cube14.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-12, 0.0, 44.8));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(2.5, 3.0, 0.0));
+        cube15.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(9.9, 3.0, 42.7));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(0.0, .7, 1.5));
+        glm::mat4 r = glm::rotate(identityMatrix, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        cube16.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2*modeltranslate* scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(10, -1.0, 45.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 5.7, -4.0));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(10, -1.0, 45.0-4.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 3.7, -2.0));        
+        cube17.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
 
        
-        
-
-
-
-        
-
-
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -1462,10 +1619,42 @@ void boundary(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogethe
         translateP = glm::translate(identityMatrix, glm::vec3(8.0, -0.7, 44.7-i*0.3));
 
 
-        Cylinder c = Cylinder(0.65f, 36, 18, glm::vec3((float)255 / 255, (float)89 / 255, (float)0.0 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
+        Cylinder c = Cylinder(0.65f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
         c.drawSphere(lightingShader, alTogether * translateP * scaleP);
 
+        
+        Sphere c1 = Sphere(0.1f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
+
+        glm::mat4 translate = glm::mat4(1.0f);
+        
+        translate = glm::translate(identityMatrix, glm::vec3(8.0, 0.72, 44.7 - i * 0.3));
+        c1.drawSphere(lightingShader, alTogether * translate);
+
     }
+
+    for (int i = 0; i < 7; i++)
+    {
+        glm::mat4  translateP = glm::mat4(1.0f);
+        glm::mat4 identityMatrix = glm::mat4(1.0f);
+        glm::mat4  scaleP = glm::mat4(1.0f);
+
+        scaleP = glm::scale(identityMatrix, glm::vec3(.1, .07, -0.1));
+        translateP = glm::translate(identityMatrix, glm::vec3(6.0, -0.7, 44.7 - i * 0.3));
+
+
+        Cylinder c = Cylinder(0.65f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
+        c.drawSphere(lightingShader, alTogether * translateP * scaleP);
+
+
+        Sphere c1 = Sphere(0.1f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
+
+        glm::mat4 translate = glm::mat4(1.0f);
+
+        translate = glm::translate(identityMatrix, glm::vec3(6.0, 0.72, 44.7 - i * 0.3));
+        c1.drawSphere(lightingShader, alTogether * translate);
+
+    }
+
 
     for (int i = 0; i < 7; i++)
     {
@@ -1492,6 +1681,8 @@ void boundary(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogethe
         model = alTogether * translate * scale;
         drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)213 / 255, (float)46 / 255);
     }
+
+    
 
 
 
@@ -2300,6 +2491,15 @@ void processInput(GLFWwindow* window)
         else if (rotateAxis_Y) rotateAngle_Y -= 0.1;
         else rotateAngle_Z -= 0.1;
     }
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+        camera.ProcessKeyboard(DOWN, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    {
+        eyeX -= 2.5 * deltaTime;
+        basic_camera.changeEye(eyeX, eyeY, eyeZ);
+    }
     if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) translate_Y += 0.01;
     if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) translate_Y -= 0.01;
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) translate_X += 0.01;
@@ -2335,16 +2535,7 @@ void processInput(GLFWwindow* window)
         rotateAxis_Z = 1.0;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-    {
-        eyeX += 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
-    }
-    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-    {
-        eyeX -= 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
-    }
+    
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
     {
         eyeZ += 2.5 * deltaTime;

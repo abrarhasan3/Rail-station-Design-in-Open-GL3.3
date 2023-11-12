@@ -1,1 +1,79 @@
-﻿  Lighting.vcxproj -> F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\x64\Debug\Lighting.exe
+﻿  main.cpp
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\sphere.h(187,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\sphere.h(188,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\sphere.h(190,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\cylinder.h(187,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\cylinder.h(191,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\cylinder.h(215,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\cylinder.h(217,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\cylinder.h(185,28): warning C4101: 'xz': unreferenced local variable
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(226,26): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(245,26): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(271,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(275,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(298,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(300,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\wheel.h(269,28): warning C4101: 'xz': unreferenced local variable
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\semiCylinder.h(190,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\semiCylinder.h(202,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\semiCylinder.h(217,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\semiCylinder.h(219,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\semiCylinder.h(185,28): warning C4101: 'xz': unreferenced local variable
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(68,12): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(71,10): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(74,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(74,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(74,41): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(90,22): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(90,44): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(235,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(235,49): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(746,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(1023,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(1151,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(1895,60): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(1895,53): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(1895,46): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2098,20): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2158,60): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2158,53): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2158,46): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2332,27): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2389,22): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2392,23): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2393,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2394,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2395,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2396,22): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2406,60): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2406,53): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2406,46): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2417,60): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2417,53): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2417,46): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2428,49): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2439,49): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2450,60): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2450,53): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2450,46): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2461,60): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2461,53): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2461,46): warning C4305: 'argument': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2490,47): warning C4305: '-=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2491,52): warning C4305: '-=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2492,34): warning C4305: '-=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2500,21): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2503,74): warning C4305: '+=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2504,74): warning C4305: '-=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2505,74): warning C4305: '+=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2506,74): warning C4305: '-=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2507,74): warning C4305: '+=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2518,29): warning C4305: '+=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2525,29): warning C4305: '+=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2532,29): warning C4305: '+=': truncation from 'double' to 'float'
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2541,21): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2546,21): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2551,21): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\main.cpp(2556,21): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+glfw3.lib(input.obj) : warning LNK4099: PDB '' was not found with 'glfw3.lib(input.obj)' or at ''; linking object as if no debug info
+  Lighting.vcxproj -> F:\academic\4-2\Project\Rail-station-Design-in-Open-GL3.3 - Copy\x64\Debug\Lighting.exe

@@ -73,15 +73,15 @@ float M_PI = 3.1416;
 float moveZ = 0.0;
 int n;
 float pi = 3.1416;
-
-bool directionLightOn = true, moveVar = false;
+float openDoor = 0.0;
+bool directionLightOn = true, moveVar = false,doorOpenVar = false, doorCloseVar = false;
 float ambientR=.2, ambientG=.2, ambientB=.2;
 
 
 
 
 // camera
-Camera camera(glm::vec3(1.0f, 5.1f, 7.2f));
+Camera camera(glm::vec3(-15.0f, 2.1f, 50.2f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -575,7 +575,12 @@ int main()
     unsigned int specMap20 = loadTexture(specularMapPath20.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
     Cube cube20 = Cube(diffMap20, specMap20, 32.0f, 0.0f, 0.0f, 1.0f, 1.0f);
 
+    string diffuseMapPath21 = "brick.jpg";
+    string specularMapPath21 = "whiteBackground.png";
 
+    unsigned int diffMap21 = loadTexture(diffuseMapPath21.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    unsigned int specMap21 = loadTexture(specularMapPath21.c_str(), GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    Cube cube21 = Cube(diffMap21, specMap21, 32.0f, 0.0f, 0.0f, 1.0f, 10.0f);
 
 
     
@@ -1018,14 +1023,14 @@ int main()
 
 
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 12; i++)
         {
             model = glm::mat4(1.0f);
             translate = glm::mat4(1.0f);
             scale = glm::mat4(1.0f);
 
             scale = glm::scale(model, glm::vec3(1.0, 5.0, -1.0));
-            translate = glm::translate(model, glm::vec3(6.55, -.4, 13.0 - (9.2 * i)));
+            translate = glm::translate(model, glm::vec3(7.55, -.4, 12.8 - (6.2 * i)));
             model = modelMatrixForContainer * translate * scale;
             cube.drawCubeWithTexture(lightingShaderWithTexture, model);
 
@@ -1033,20 +1038,36 @@ int main()
             model = glm::mat4(1.0f);
             translate = glm::mat4(1.0f);
             scale = glm::mat4(1.0f);
-            scale = glm::scale(model, glm::vec3(4.7, -1.0, -9.64 * i));
-            translate = glm::translate(model, glm::vec3(4.7, -.4, 15.2));
+            scale = glm::scale(model, glm::vec3(4.7, -1.0, -6.64));
+            translate = glm::translate(model, glm::vec3(5.7, -.4, 15.0 - 6.64 * i));
+            model = modelMatrixForContainer * translate * scale;
+            cube.drawCubeWithTexture(lightingShaderWithTexture, model);
+
+            model = glm::mat4(1.0f);
+            translate = glm::mat4(1.0f);
+            scale = glm::mat4(1.0f);
+            scale = glm::scale(model, glm::vec3(1.0, -1.0, -6.64));
+            translate = glm::translate(model, glm::vec3(4.7, -.4, 15.0 - (6.64 * i)));
+            model = modelMatrixForContainer * translate * scale;
+            cube21.drawCubeWithTexture(lightingShaderWithTexture, model);
+
+            model = glm::mat4(1.0f);
+            translate = glm::mat4(1.0f);
+            scale = glm::mat4(1.0f);
+            scale = glm::scale(model, glm::vec3(4.7, -1.0, -6.64));
+            translate = glm::translate(model, glm::vec3(5.7, -.4 + 5.0 + 1, 15.0 - 6.64 * i));
             model = modelMatrixForContainer * translate * scale;
             cube.drawCubeWithTexture(lightingShaderWithTexture, model);
         }
 
-        model = glm::mat4(1.0f);
+        /*model = glm::mat4(1.0f);
         translate = glm::mat4(1.0f);
         scale = glm::mat4(1.0f);
 
         scale = glm::scale(model, glm::vec3(4.7, -1.0, -63.2));
         translate = glm::translate(model, glm::vec3(4.7, -.4 + 5.0 + 1, 15.2));
         model = modelMatrixForContainer * translate * scale;
-        cube.drawCubeWithTexture(lightingShaderWithTexture, model);
+        cube.drawCubeWithTexture(lightingShaderWithTexture, model);*/
         
         
 
@@ -1672,18 +1693,31 @@ int main()
         scale = glm::scale(identityMatrix, glm::vec3(2.0, 1.0, 1.0));
         drawAludoor(lightingShaderWithTexture, modeltranslate3, cube19, cube20);
 
+
+        if (openDoor > -90.0 && doorOpenVar)
+        {
+            openDoor = openDoor - 1.0;
+            doorCloseVar = false;
+        }
+        else if (doorCloseVar && openDoor !=0 )
+        {
+            doorOpenVar = false;
+            openDoor = openDoor + 1.0;
+
+        }
+
         glm::mat4 modeltranslate1 = glm::translate(identityMatrix, glm::vec3(15, 0.0, -45.0 + 9.0));
         glm::mat4 modeltranslate2 = glm::translate(identityMatrix, glm::vec3(-10 - 5, 0.0, 45.0 - 9.0));
         modeltranslate3 = glm::translate(identityMatrix, glm::vec3(0.0, 0.0, 0.0));
-        glm::mat4 rotate11 = glm::rotate(identityMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 rotate11 = glm::rotate(identityMatrix, glm::radians(openDoor), glm::vec3(0.0f, 1.0f, 0.0f));
         drawAludoor(lightingShaderWithTexture, modeltranslate3* modeltranslate2* rotate11* modeltranslate1, cube19, cube20);
 
 
 
         modeltranslate1 = glm::translate(identityMatrix, glm::vec3(15, 0.0, -45.0 + 9.0));
         modeltranslate2 = glm::translate(identityMatrix, glm::vec3(-10 - 5, 0.0, 45.0 - 9.0));
-        modeltranslate3 = glm::translate(identityMatrix, glm::vec3(0.0, 0.0, 0.5));
-        rotate11 = glm::rotate(identityMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        modeltranslate3 = glm::translate(identityMatrix, glm::vec3(0.25, 0.0, 0.0));
+        rotate11 = glm::rotate(identityMatrix, glm::radians(-180-openDoor), glm::vec3(0.0f, 1.0f, 0.0f));
         drawAludoor(lightingShaderWithTexture, modeltranslate3* modeltranslate2* rotate11* modeltranslate1, cube19, cube20);
 
 
@@ -1699,14 +1733,40 @@ int main()
         {
             for (int j = 0; j < 10; j++)
             {
-                modeltranslate3 = glm::translate(identityMatrix, glm::vec3(-2.0-j, -1.0, 2.0+i));
+                modeltranslate3 = glm::translate(identityMatrix, glm::vec3(-1.5-j, -1.0, 2.0+i));
                 drawsquareroof(lightingShaderWithTexture, modeltranslate3, cube5);
             }
 
         }
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15, -1.0, 45.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 5.7, -5.0));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15, -1.0, 32.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 5.7, -7.0));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15, 2.3, 40.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 2.5, -8.0));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(-15, -1, 36.3));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 3.3, -.4));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2 * modeltranslate * scale);
         
-
-
+        
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -1727,6 +1787,47 @@ int main()
     glfwTerminate();
     return 0;
 }
+
+
+void scrollingText(Shader& lightingShaderWithTexture, glm::mat4 alTogether, Cube& cube5)
+
+{
+
+
+    glm::mat4 modelMatrixForContainer2 = glm::mat4(1.0f), identityMatrix = glm::mat4(1.0f);
+    glm::mat4 modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, 4.7, 28.5));
+    glm::mat4  scale = glm::mat4(1.0f);
+    scale = glm::scale(identityMatrix, glm::vec3(1.0, 1, .1));
+    cube5.drawCubeWithTexture(lightingShaderWithTexture, alTogether * modeltranslate * scale);
+
+
+    modelMatrixForContainer2 = glm::mat4(1.0f);
+    modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, 5.7, 28.5));
+    scale = glm::mat4(1.0f);
+    scale = glm::scale(identityMatrix, glm::vec3(1.0, 0.1, 1.0));
+    cube5.drawCubeWithTexture(lightingShaderWithTexture, alTogether * modeltranslate * scale);
+
+    modelMatrixForContainer2 = glm::mat4(1.0f);
+    modeltranslate = glm::translate(identityMatrix, glm::vec3(-14.0, 4.7, 28.6));
+    scale = glm::mat4(1.0f);
+    scale = glm::scale(identityMatrix, glm::vec3(0.1, 1, 1.0));
+    cube5.drawCubeWithTexture(lightingShaderWithTexture, alTogether * modeltranslate * scale);
+
+    modelMatrixForContainer2 = glm::mat4(1.0f);
+    modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, 4.7, 29.5));
+    scale = glm::mat4(1.0f);
+    scale = glm::scale(identityMatrix, glm::vec3(1.0, 1, .1));
+    cube5.drawCubeWithTexture(lightingShaderWithTexture, alTogether * modeltranslate * scale);
+
+    modelMatrixForContainer2 = glm::mat4(1.0f);
+    modeltranslate = glm::translate(identityMatrix, glm::vec3(-15.0, 4.7, 28.6));
+    scale = glm::mat4(1.0f);
+    scale = glm::scale(identityMatrix, glm::vec3(0.1, 1, 1.0));
+    cube5.drawCubeWithTexture(lightingShaderWithTexture, alTogether * modeltranslate * scale);
+}
+
+
+
 
 void drawsquareroof(Shader& lightingShaderWithTexture, glm::mat4 alTogether, Cube& cube5)
 
@@ -1763,6 +1864,8 @@ void drawsquareroof(Shader& lightingShaderWithTexture, glm::mat4 alTogether, Cub
             scale = glm::mat4(1.0f);
             scale = glm::scale(identityMatrix, glm::vec3(0.1, 1, 1.0));
             cube5.drawCubeWithTexture(lightingShaderWithTexture, alTogether * modeltranslate * scale);
+
+
 
 
 
@@ -2723,20 +2826,29 @@ void processInput(GLFWwindow* window)
         else if (rotateAxis_Y) rotateAngle_Y -= 0.1;
         else rotateAngle_Z -= 0.1;
     }
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
     {
-        camera.ProcessKeyboard(DOWN, deltaTime);
+        doorOpenVar = true;
+        doorCloseVar = false;
+        
     }
-    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
     {
-        eyeX -= 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
+        doorOpenVar = false;
+        doorCloseVar = true;
     }
-    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) translate_Y += 0.01;
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+    {
+        moveVar = true;
+      
+    }
+
+    
+   /* if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) translate_Y += 0.01;
     if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) translate_Y -= 0.01;
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) translate_X += 0.01;
     if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) translate_X -= 0.01;
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) translate_Z += 0.01;
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) translate_Z += 0.01;*/
     //if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) translate_Z -= 0.01;
     //if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) scale_X += 0.001;
     //if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) scale_X -= 0.001;

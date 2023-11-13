@@ -741,6 +741,19 @@ int main()
             drawdoor(cubeVAO, lightingShader, model * translateCube);
         }
 
+
+        glm:: mat4 rotateDoor = glm::rotate(identityMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        for (int i = 0; i < 9; i++)
+        {
+            translateCube = glm::mat4(1.0f);
+            glm::mat4 translate22 = glm::translate(identityMatrix, glm::vec3(-8.4, -0.7, 25.0));
+            glm::mat4 translate222 = glm::translate(identityMatrix, glm::vec3(8.4, 0.7, -25.0));
+            translateCube = glm::translate(identityMatrix, glm::vec3(18.5 , 0.0, 8.6+.4 * i));
+            drawdoor(cubeVAO, lightingShader, model * translateCube* translate22 * rotateDoor* translate222);
+        }
+       
+
+
         if (moveZ > -15.0 && moveVar)
         {
             moveZ = moveZ - .1;
@@ -1582,6 +1595,21 @@ int main()
         scale = glm::mat4(1.0f);
         scale = glm::scale(identityMatrix, glm::vec3(.25, 3.7, -2.0));        
         cube17.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(10, -1.0, 45.0 - 6.0));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 5.7, -2.0));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
+
+
+        modelMatrixForContainer2 = glm::mat4(1.0f);
+        modeltranslate = glm::translate(identityMatrix, glm::vec3(10, -1.0, 45.0 - 11.5));
+        scale = glm::mat4(1.0f);
+        scale = glm::scale(identityMatrix, glm::vec3(.25, 5.7, -5.4));
+        cube5.drawCubeWithTexture(lightingShaderWithTexture, modelMatrixForContainer2* modeltranslate* scale);
+
+
 
        
 

@@ -142,10 +142,12 @@
     <ClInclude Include="cylinder.h" />
     <ClInclude Include="pointLight.h" />
     <ClInclude Include="semiCylinder.h" />
+    <ClInclude Include="semiwheel.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="wheel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragmentShader.fs" />

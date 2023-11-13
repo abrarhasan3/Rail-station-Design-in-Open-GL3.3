@@ -53,6 +53,12 @@
     <ClInclude Include="sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="wheel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="semiwheel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertexShader.vs" />

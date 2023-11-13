@@ -25,6 +25,7 @@
 #include "semiCylinder.h"
 #include "sphere.h"
 #include "semiWheel.h"
+#include "semiCircle.h"
 
 
 #include <iostream>
@@ -2384,8 +2385,22 @@ void cabin(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
     glm::mat4 temp = glm::mat4(1.0f), identityMatrix = glm::mat4(1.0f);
     glm::mat4 r1 = glm::rotate(identityMatrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     glm::mat4 r2 = glm::rotate(identityMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    temp = alTogether * glm::translate(identityMatrix, glm::vec3(2.2, 2.1, 5.0)) * glm::scale(identityMatrix, glm::vec3(1.2, .3, 1.0)) * r2 * r1;
+    temp = alTogether * glm::translate(identityMatrix, glm::vec3(2.2, 2.1, 5.0)) * glm::scale(identityMatrix, glm::vec3(1.2, .3, 0.814)) * r2 * r1;
     wheel1.drawsemiWheel(lightingShader, temp);
+
+
+    semiCircle wheel3 = semiCircle(0.0f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);;
+    temp = glm::mat4(1.0f);
+    r1 = glm::rotate(identityMatrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    r2 = glm::rotate(identityMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    temp = alTogether * glm::translate(identityMatrix, glm::vec3(2.2, 2.1, 5.0)) * glm::scale(identityMatrix, glm::vec3(1.2, .3, 0.81)) * r2 * r1;
+    wheel3.drawsemiCircle(lightingShader, temp);
+
+    temp = glm::mat4(1.0f);
+    r1 = glm::rotate(identityMatrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    r2 = glm::rotate(identityMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    temp = alTogether * glm::translate(identityMatrix, glm::vec3(2.2, 2.1, -24.3)) * glm::scale(identityMatrix, glm::vec3(1.2*2, .3*2, 0.81)) * r2 * r1;
+    wheel3.drawsemiCircle(lightingShader, temp);
 
     //curvy ash upper
   /*  model = glm::mat4(1.0f);

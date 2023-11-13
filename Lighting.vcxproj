@@ -141,6 +141,7 @@
     <ClInclude Include="cube.h" />
     <ClInclude Include="cylinder.h" />
     <ClInclude Include="pointLight.h" />
+    <ClInclude Include="semicircle.h" />
     <ClInclude Include="semiCylinder.h" />
     <ClInclude Include="semiwheel.h" />
     <ClInclude Include="shader.h" />

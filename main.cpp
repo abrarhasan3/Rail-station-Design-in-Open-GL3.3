@@ -78,8 +78,8 @@ float moveZ = 0.0;
 float fanrotate = 0.0;
 int n;
 float pi = 3.1416;
-float openDoor = 0.0;
-bool directionLightOn = true, moveVar = false, doorOpenVar = false, doorCloseVar = false, scrollVar = false, fanOn = false;
+float openDoor = 0.0, gateOpenT=0.0;
+bool directionLightOn = true, moveVar = false, doorOpenVar = false, doorCloseVar = false, scrollVar = false, fanOn = false, gateOpen= false;
 float scrollZ1 = 0.0, scrollZ2 = 0.0, scrollZ3 = 0.0;
 float ambientR=.2, ambientG=.2, ambientB=.2;
 
@@ -89,7 +89,7 @@ float ambientR=.2, ambientG=.2, ambientB=.2;
 
 
 // camera
-Camera camera(glm::vec3(-5.0f, 2.1f, 0.2f));
+Camera camera(glm::vec3(-49.0f, 2.1f, 32.2f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -126,6 +126,7 @@ glm::vec3 pointLightPositions[] = {
     glm::vec3(-14.0 + 5 * 3 ,4.7,31.5+8),
     glm::vec3(-14.0 + 5 * 4 ,4.7,31.5+8),
 
+    glm::vec3(-17.0 ,4.7,31.5 + 4),
     
 };
 
@@ -374,6 +375,18 @@ PointLight pointlight20(
     0.032f, //k_q
     20       // light number
 );
+PointLight pointlight21(
+
+    pointLightPositions[20].x, pointLightPositions[20].y, pointLightPositions[20].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    21       // light number
+);
+
 
 
 
@@ -922,7 +935,7 @@ int main()
        pointlight18.setUpPointLight(lightingShader);
        pointlight19.setUpPointLight(lightingShader);
        pointlight20.setUpPointLight(lightingShader);
-
+       pointlight21.setUpPointLight(lightingShader);
        lightingShader.use();
 
        
@@ -1309,7 +1322,7 @@ int main()
 
         // we now draw as many light bulbs as we have point lights.
         glBindVertexArray(lightCubeVAO);
-        for (unsigned int i = 0; i < 20; i++)
+        for (unsigned int i = 0; i < 21; i++)
         {
                        
             model = glm::mat4(1.0f);
@@ -1351,7 +1364,7 @@ int main()
         pointlight18.setUpPointLight(lightingShaderWithTexture);
         pointlight19.setUpPointLight(lightingShaderWithTexture);
         pointlight20.setUpPointLight(lightingShaderWithTexture);
-
+        pointlight21.setUpPointLight(lightingShaderWithTexture);
 
         lightingShaderWithTexture.setVec3("directionalLight.directiaon", 0.5f, -3.0f, -3.0f);
         lightingShaderWithTexture.setVec3("directionalLight.ambient", ambientR, ambientG, ambientB);

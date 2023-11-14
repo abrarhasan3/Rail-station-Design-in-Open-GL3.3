@@ -7,10 +7,13 @@
 
 #ifndef pointLight_h
 #define pointLight_h
-
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include "shader.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 class PointLight {
 public:
@@ -21,7 +24,7 @@ public:
     float k_c;
     float k_l;
     float k_q;
-    int lightNumber;
+    int Number;
 
     PointLight(float posX, float posY, float posZ, float ambR, float ambG, float ambB, float diffR, float diffG, float diffB, float specR, float specG, float specB, float constant, float linear, float quadratic, int num) {
 
@@ -32,12 +35,22 @@ public:
         k_c = constant;
         k_l = linear;
         k_q = quadratic;
-        lightNumber = num;
+        Number = num-1;
     }
     void setUpPointLight(Shader& lightingShader)
     {
         lightingShader.use();
+        string lightNumber1 = to_string(Number);
+        lightingShader.setVec3("pointLights[" + lightNumber1 + "].position", position);
+        lightingShader.setVec3("pointLights[" + lightNumber1 + "].ambient", ambient * ambientOn);
+        lightingShader.setVec3("pointLights[" + lightNumber1 + "].diffuse", diffuse * diffuseOn);
+        lightingShader.setVec3("pointLights[" + lightNumber1 + "].specular", specular * specularOn);
+        lightingShader.setFloat("pointLights[" + lightNumber1 + "].k_c", k_c);
+        lightingShader.setFloat("pointLights[" + lightNumber1 + "].k_l", k_l);
+        lightingShader.setFloat("pointLights[" + lightNumber1 + "].k_q", k_q);
+        
 
+        /*
         if (lightNumber == 1) {
             lightingShader.setVec3("pointLights[0].position", position);
             lightingShader.setVec3("pointLights[0].ambient", ambientOn * ambient);
@@ -147,7 +160,7 @@ public:
             lightingShader.setFloat("pointLights[10].k_c", k_c);
             lightingShader.setFloat("pointLights[10].k_l", k_l);
             lightingShader.setFloat("pointLights[10].k_q", k_q);            
-        }
+        }*/
     }
     void turnOff()
     {

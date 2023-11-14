@@ -49,6 +49,7 @@ void boundary(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogethe
 void drawAludoor(Shader& lightingShader, glm::mat4 alTogether, Cube& cube, Cube& cube2);
 void drawsquareroof(Shader& lightingShaderWithTexture, glm::mat4 alTogether, Cube& cube5);
 void scrollingText(Shader& lightingShaderWithTexture, glm::mat4 alTogether, Cube& cube5);
+void fan(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether);
 unsigned int loadTexture(char const* path, GLenum textureWrappingModeS, GLenum textureWrappingModeT, GLenum textureFilteringModeMin, GLenum textureFilteringModeMax);
 
 
@@ -72,6 +73,7 @@ float scale_Y = 1.0;
 float scale_Z = 1.0;
 float M_PI = 3.1416;
 float moveZ = 0.0;
+float fanrotate = 0.0;
 int n;
 float pi = 3.1416;
 float openDoor = 0.0;
@@ -83,7 +85,7 @@ float ambientR=.2, ambientG=.2, ambientB=.2;
 
 
 // camera
-Camera camera(glm::vec3(-15.0f, 2.1f, 50.2f));
+Camera camera(glm::vec3(-25.0f, 2.1f, 50.2f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -96,9 +98,9 @@ BasicCamera basic_camera(eyeX, eyeY, eyeZ, lookAtX, lookAtY, lookAtZ, V);
 float pointLightYPos = 1.9, pointLightXPos = 2.1;;
 // positions of the point lights
 glm::vec3 pointLightPositions[] = {
-    glm::vec3(pointLightXPos,pointLightYPos,-1.2f+moveZ),
-    glm::vec3(pointLightXPos,pointLightYPos,-1.2-(2.4*1)+ moveZ),
-    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 2)+moveZ),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2f + moveZ),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 1) + moveZ),
+    glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 2) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 3) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 4) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 5) + moveZ),
@@ -106,7 +108,19 @@ glm::vec3 pointLightPositions[] = {
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 7) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 8) + moveZ),
     glm::vec3(pointLightXPos,pointLightYPos,-1.2 - (2.4 * 9) + moveZ),
-    glm::vec3(-14.0,4.7,31.5)
+    
+    glm::vec3(-14.0,4.7,31.5),
+    glm::vec3(-14.0+5,4.7,31.5),
+    glm::vec3(-14.0+ 5*2 ,4.7,31.5),
+    glm::vec3(-14.0+ 5 * 3 ,4.7,31.5),
+    glm::vec3(-14.0+5 * 4 ,4.7,31.5),
+
+
+    glm::vec3(-14.0,4.7,31.5+8),
+    glm::vec3(-14.0 + 5,4.7,31.5+8),
+    glm::vec3(-14.0 + 5 * 2 ,4.7,31.5+8),
+    glm::vec3(-14.0 + 5 * 3 ,4.7,31.5+8),
+    glm::vec3(-14.0 + 5 * 4 ,4.7,31.5+8),
 
     
 };
@@ -118,7 +132,7 @@ PointLight pointlight1(
 
     pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
-    1.0f, 1.0f, 1.0f,     // diffuse
+    5.0f, 1.0f, 1.0f,     // diffuse
     specularR, specularG, specularB,        // specular
     1.0f,   //k_c
     0.09f,  //k_l
@@ -230,13 +244,134 @@ PointLight pointlight11(
 
     pointLightPositions[10].x, pointLightPositions[10].y, pointLightPositions[10].z,  // position
     0.05f, 0.05f, 0.05f,     // ambient
-    1.0f, 1.0f, 1.0f,     // diffuse
+    .5f, .5f, .5f,     // diffuse
     specularR, specularG, specularB,       // specular
     1.0f,   //k_c
     0.09f,  //k_l
     0.032f, //k_q
     11       // light number
 );
+
+
+PointLight pointlight12(
+
+    pointLightPositions[11].x, pointLightPositions[11].y, pointLightPositions[11].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    12       // light number
+);
+
+
+PointLight pointlight13(
+
+    pointLightPositions[12].x, pointLightPositions[12].y, pointLightPositions[12].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse    // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    13       // light number
+);
+
+
+PointLight pointlight14(
+
+    pointLightPositions[13].x, pointLightPositions[13].y, pointLightPositions[13].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse    // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    14       // light number
+);
+
+
+
+PointLight pointlight15(
+
+    pointLightPositions[14].x, pointLightPositions[14].y, pointLightPositions[14].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    15       // light number
+);
+
+
+PointLight pointlight16(
+
+    pointLightPositions[15].x, pointLightPositions[15].y, pointLightPositions[15].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    16       // light number
+);
+
+
+PointLight pointlight17(
+
+    pointLightPositions[16].x, pointLightPositions[16].y, pointLightPositions[16].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    17       // light number
+);
+
+
+PointLight pointlight18(
+
+    pointLightPositions[17].x, pointLightPositions[17].y, pointLightPositions[17].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse    // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    18       // light number
+);
+
+
+PointLight pointlight19(
+
+    pointLightPositions[18].x, pointLightPositions[18].y, pointLightPositions[18].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse    // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    19       // light number
+);
+
+
+
+PointLight pointlight20(
+
+    pointLightPositions[19].x, pointLightPositions[19].y, pointLightPositions[19].z,  // position
+    0.05f, 0.05f, 0.05f,     // ambient
+    .5f, .5f, .5f,     // diffuse
+    specularR, specularG, specularB,       // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    20       // light number
+);
+
+
 
 float spotLightXpos = -1.9-2.7  , spotLightYpos = -.4 +2.0 +1 ;
 glm::vec3 spotPositions[] = {
@@ -265,6 +400,61 @@ SpotLight spotlight2(
     0.09f,  //k_l
     0.032f, //k_q
     2,       // light number
+    glm::cos(glm::radians(20.5f)),
+    glm::cos(glm::radians(25.0f)),
+    0, -1, 0
+);
+
+SpotLight spotlight3(
+    -37.0, .8, 25.0,  // position
+    1.0f, 1.0f, 1.0f,     // ambient
+    1.0f, 1.0f, 1.0f,      // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    3,       // light number
+    glm::cos(glm::radians(20.5f)),
+    glm::cos(glm::radians(25.0f)),
+    0, -1, 0
+);
+
+SpotLight spotlight4(
+    -41.0, .8, 25.0,  // position
+    1.0f, 1.0f, 1.0f,     // ambient
+    1.0f, 1.0f, 1.0f,      // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    4,       // light number
+    glm::cos(glm::radians(20.5f)),
+    glm::cos(glm::radians(25.0f)),
+    0, -1, 0
+);
+SpotLight spotlight5(
+    -45.0, .8, 25.0,  // position
+    1.0f, 1.0f, 1.0f,     // ambient
+    1.0f, 1.0f, 1.0f,      // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    5,       // light number
+    glm::cos(glm::radians(20.5f)),
+    glm::cos(glm::radians(25.0f)),
+    0, -1, 0
+);
+
+SpotLight spotlight6(
+    -49.0, .8, 25.0,  // position
+    1.0f, 1.0f, 1.0f,     // ambient
+    1.0f, 1.0f, 1.0f,      // diffuse
+    1.0f, 1.0f, 1.0f,        // specular
+    1.0f,   //k_c
+    0.09f,  //k_l
+    0.032f, //k_q
+    6,       // light number
     glm::cos(glm::radians(20.5f)),
     glm::cos(glm::radians(25.0f)),
     0, -1, 0
@@ -694,6 +884,16 @@ int main()
        pointlight9.setUpPointLight(lightingShader);
        pointlight10.setUpPointLight(lightingShader);
        pointlight11.setUpPointLight(lightingShader);
+       pointlight12.setUpPointLight(lightingShader);
+       pointlight13.setUpPointLight(lightingShader);
+       pointlight14.setUpPointLight(lightingShader);
+       pointlight15.setUpPointLight(lightingShader);
+       pointlight16.setUpPointLight(lightingShader);
+       pointlight17.setUpPointLight(lightingShader);
+       pointlight18.setUpPointLight(lightingShader);
+       pointlight19.setUpPointLight(lightingShader);
+       pointlight20.setUpPointLight(lightingShader);
+
        lightingShader.use();
 
        
@@ -710,7 +910,10 @@ int main()
 
        spotlight1.setUpspotLight(lightingShader);
        spotlight2.setUpspotLight(lightingShader);
-
+       spotlight3.setUpspotLight(lightingShader);
+       spotlight4.setUpspotLight(lightingShader);
+       spotlight5.setUpspotLight(lightingShader);
+       spotlight6.setUpspotLight(lightingShader);
         // activate shader
         lightingShader.use();
 
@@ -737,22 +940,25 @@ int main()
 
         glm::mat4 moveM = glm::translate(identityMatrix, glm::vec3(0.0, 0.0, moveZ));
 
+        for (int i = 0; i < 5; i++)
+        {
+            glm::mat4 scaleM1 = glm::scale(identityMatrix, glm::vec3(.2, 4, .2));
+            glm::mat4 translateM1 = glm::translate(identityMatrix, glm::vec3(-33.0-4*i, -3.0, 29.0));
 
-        glm::mat4 scaleM1 = glm::scale(identityMatrix, glm::vec3(.2,4 ,.2 ));
-        glm::mat4 translateM1 = glm::translate(identityMatrix, glm::vec3(-33.0, -3.0, 29.0));
+            drawCube(cubeVAO, lightingShader, model * translateM1 * scaleM1, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+
+            scaleM1 = glm::scale(identityMatrix, glm::vec3(.2, .2, -4));
+            translateM1 = glm::translate(identityMatrix, glm::vec3(-33.0 - 4 * i, 1.0, 29.0));
+
+            drawCube(cubeVAO, lightingShader, model * translateM1 * scaleM1, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+            scaleM1 = glm::scale(identityMatrix, glm::vec3(.2, .2, 1));
+            translateM1 = glm::translate(identityMatrix, glm::vec3(-33.0 - 4 * i, .8, 25.0));
+            drawCube(cubeVAO, lightingShader, model * translateM1 * scaleM1, (float)255 / 255, (float)255 / 255, (float)255 / 255);
+
+        }
         
-        drawCube(cubeVAO, lightingShader, model * translateM1* scaleM1, (float)255 / 255, (float)255 / 255, (float)255 / 255);
-
-
-        scaleM1 = glm::scale(identityMatrix, glm::vec3(.2, .2, -4));
-        translateM1 = glm::translate(identityMatrix, glm::vec3(-33.0, 1.0, 29.0));
-
-        drawCube(cubeVAO, lightingShader, model * translateM1 * scaleM1, (float)255 / 255, (float)255 / 255, (float)255 / 255);
-        
-        scaleM1 = glm::scale(identityMatrix, glm::vec3(.2, .2, 1));
-        translateM1 = glm::translate(identityMatrix, glm::vec3(-33.0, .8, 25.0));
-        drawCube(cubeVAO, lightingShader, model * translateM1 * scaleM1, (float)255 / 255, (float)255 / 255, (float)255 / 255);
-
 
         
        
@@ -829,7 +1035,7 @@ int main()
         modelCube = translateCube * scaleCube;
         drawCube(cubeVAO, lightingShader, model* modelCube, (float)3 / 255, (float)127 / 255, (float)243 / 255);
 
-        //drawdoor(cubeVAO, lightingShader, model);
+        
 
         for (int i = 0; i < 9; i++)
         {
@@ -898,11 +1104,14 @@ int main()
 
         }
 
+        fanrotate = fanrotate + 5;
+
+        glm::mat4 r4 = glm::rotate(identityMatrix, glm::radians(fanrotate), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 modeltranslate4 = glm::translate(identityMatrix, glm::vec3(25.0, -2.8, -45.0));
+        glm::mat4 modeltranslate5 = glm::translate(identityMatrix, glm::vec3(-25.0, 2.8, 45.0));
         
 
-        
-
-
+        fan(cubeVAO, lightingShader, model* modeltranslate5 * r4 * modeltranslate4);
         
 
 
@@ -1046,7 +1255,7 @@ int main()
 
         // we now draw as many light bulbs as we have point lights.
         glBindVertexArray(lightCubeVAO);
-        for (unsigned int i = 0; i < 11; i++)
+        for (unsigned int i = 0; i < 20; i++)
         {
                        
             model = glm::mat4(1.0f);
@@ -1079,6 +1288,15 @@ int main()
         pointlight9.setUpPointLight(lightingShaderWithTexture);
         pointlight10.setUpPointLight(lightingShaderWithTexture);
         pointlight11.setUpPointLight(lightingShaderWithTexture);
+        pointlight12.setUpPointLight(lightingShaderWithTexture);
+        pointlight13.setUpPointLight(lightingShaderWithTexture);
+        pointlight14.setUpPointLight(lightingShaderWithTexture);
+        pointlight15.setUpPointLight(lightingShaderWithTexture);
+        pointlight16.setUpPointLight(lightingShaderWithTexture);
+        pointlight17.setUpPointLight(lightingShaderWithTexture);
+        pointlight18.setUpPointLight(lightingShaderWithTexture);
+        pointlight19.setUpPointLight(lightingShaderWithTexture);
+        pointlight20.setUpPointLight(lightingShaderWithTexture);
 
 
         lightingShaderWithTexture.setVec3("directionalLight.directiaon", 0.5f, -3.0f, -3.0f);
@@ -1092,6 +1310,10 @@ int main()
 
         spotlight1.setUpspotLight(lightingShaderWithTexture);
         spotlight2.setUpspotLight(lightingShaderWithTexture);
+        spotlight3.setUpspotLight(lightingShaderWithTexture);
+        spotlight4.setUpspotLight(lightingShaderWithTexture);
+        spotlight5.setUpspotLight(lightingShaderWithTexture);
+        spotlight6.setUpspotLight(lightingShaderWithTexture);
 
         lightingShaderWithTexture.use();
         lightingShaderWithTexture.setVec3("viewPos", camera.Position);
@@ -2252,6 +2474,39 @@ void boundary(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogethe
 
 }
 
+void fan(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
+{
+    glm::mat4 identityMatrix = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 translate = glm::mat4(1.0f);
+    glm::mat4 scale = glm::mat4(1.0f);
+
+
+    scale = glm::scale(identityMatrix, glm::vec3(-1.0, .05, 0.3));
+    translate = glm::translate(identityMatrix, glm::vec3(-25.0,2.8, 45.0));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)213 / 255, (float)46 / 255);
+
+
+    scale = glm::scale(identityMatrix, glm::vec3(.3, .005, -0.3));
+    translate = glm::translate(identityMatrix, glm::vec3(-24.9, 2.8, 45.1));
+    model = alTogether * translate * scale;
+    Cylinder c = Cylinder(.3f, 36, 18, glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 / 255, (float)190 / 255, (float)181 / 255), glm::vec3((float)178 * 0.5 / 255, (float)190 * 0.5 / 255, (float)181 * 0.5 / 255), 32.0f);
+    c.drawSphere(lightingShader, model);
+
+
+    scale = glm::scale(identityMatrix, glm::vec3(1.0, .05, 0.3));
+    translate = glm::translate(identityMatrix, glm::vec3(-25.0+.2, 2.8, 45.0));
+    model = alTogether * translate * scale;
+    drawCube(cubeVAO, lightingShader, model, (float)255 / 255, (float)213 / 255, (float)46 / 255);
+
+
+    
+
+
+
+   
+}
 
 
 void drawdoor(unsigned int& cubeVAO, Shader& lightingShader, glm::mat4 alTogether)
@@ -3077,63 +3332,32 @@ void processInput(GLFWwindow* window)
       
     }
 
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+        camera.ProcessKeyboard(UP, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+        camera.ProcessKeyboard(DOWN, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
+        camera.ProcessKeyboard(P_UP, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+        camera.ProcessKeyboard(P_DOWN, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS) {
+        camera.ProcessKeyboard(Y_LEFT, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
+        camera.ProcessKeyboard(Y_RIGHT, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
+        camera.ProcessKeyboard(R_LEFT, deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
+        camera.ProcessKeyboard(R_RIGHT, deltaTime);
+    }
     
-   /* if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) translate_Y += 0.01;
-    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) translate_Y -= 0.01;
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) translate_X += 0.01;
-    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) translate_X -= 0.01;
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) translate_Z += 0.01;*/
-    //if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) translate_Z -= 0.01;
-    //if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) scale_X += 0.001;
-    //if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) scale_X -= 0.001;
-    //if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) scale_Y += 0.001;
-    //if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) scale_Y -= 0.001;
-    //if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) scale_Z += 0.001;
-    //if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) scale_Z -= 0.001;
-
-    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-    {
-        rotateAngle_X += 0.1;
-        rotateAxis_X = 1.0;
-        rotateAxis_Y = 0.0;
-        rotateAxis_Z = 0.0;
-    }
-    if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-    {
-        rotateAngle_Y += 0.1;
-        rotateAxis_X = 0.0;
-        rotateAxis_Y = 1.0;
-        rotateAxis_Z = 0.0;
-    }
-    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-    {
-        rotateAngle_Z += 0.1;
-        rotateAxis_X = 0.0;
-        rotateAxis_Y = 0.0;
-        rotateAxis_Z = 1.0;
-    }
-
     
-    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-    {
-        eyeZ += 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
-    }
-    if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-    {
-        eyeZ -= 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
-    }
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-    {
-        eyeY += 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
-    }
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-    {
-        eyeY -= 2.5 * deltaTime;
-        basic_camera.changeEye(eyeX, eyeY, eyeZ);
-    }
     if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
     {
         pointlight1.turnOff();

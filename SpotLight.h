@@ -13,6 +13,7 @@
 #include "shader.h"
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class SpotLight {

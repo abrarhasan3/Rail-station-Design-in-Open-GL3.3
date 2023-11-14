@@ -92,15 +92,7 @@ public:
     {
         return glm::lookAt(Position, Position + Front, Up);
     }
-    glm::vec3 GetPosition() const {
-        float x = Distance * sin(Phi) * cos(Theta);
-        float y = Distance * sin(Phi) * sin(Theta);
-        float z = Distance * cos(Phi);
-        return Target + glm::vec3(x, y, z);
-    }
-    glm::mat4 GetViewMatrixOrbit() const {
-        return glm::lookAt(GetPosition(), Target, glm::vec3(0.0f, 1.0f, 0.0f));
-    }
+    
 
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)

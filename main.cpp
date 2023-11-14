@@ -1093,12 +1093,15 @@ int main()
         modelCube = translateCube * scaleCube;
         drawCube(cubeVAO, lightingShader, model* modelCube, (float)3 / 255, (float)127 / 255, (float)243 / 255);
 
-        
+        if (gateOpen && gateOpenT<5.1)
+        {
+            gateOpenT += .2;
+        }
 
         for (int i = 0; i < 9; i++)
         {
             translateCube = glm::mat4(1.0f);
-            translateCube = glm::translate(identityMatrix, glm::vec3(.4*i, 0.0, 0.0));
+            translateCube = glm::translate(identityMatrix, glm::vec3(.4*i- gateOpenT, 0.0, 0.0));
             drawdoor(cubeVAO, lightingShader, model*translateCube);
         }
 
@@ -3457,7 +3460,7 @@ void processInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
     {
-        moveVar = true;
+        moveVar = !moveVar;
       
     }
 
@@ -3487,6 +3490,10 @@ void processInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
         fanOn = !fanOn;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
+        gateOpen = !gateOpen;
     }
     
     if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)

@@ -51,6 +51,20 @@ To run this project, ensure that you have the following dependencies installed:
 
 ## Tutorial 
 Setup Environment : <a href= "https://youtu.be/WoTRZ0t1tT4?si=uxiBXIGt65EZqlh5">Click Here for Tutorial </a>
+
+## Contributing
+Contributions are welcome! Feel free to open issues or submit pull requests to improve the project.
+
+Fork the project.
+- Create your feature branch: git checkout -b feature/YourFeature.
+- Commit your changes: git commit -m 'Add some feature'.
+- Push to the branch: git push origin feature/YourFeature.
+- Open a pull request.
+
+## License
+
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/). Feel free to use, modify, and distribute the code for your purposes.
+
 ## Authors
 
 - [Abrar Hasan](https://www.github.com/abrarhasan3)

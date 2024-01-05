@@ -52,18 +52,23 @@ To run this project, ensure that you have the following dependencies installed:
 
 ## Controls
 
-<div style="display: flex; justify-content: space-between;">
+
 
 | KEY  | Operation | Visual Effect |  | | KEY  | Operation | Visual Effect | | | KEY  | Operation | Visual Effect | 
 | :-------------: | :-------------: | :-------------: |:-------------: |:-------------: | :-------------: | :-------------: | :-------------: |:-------------: |:-------------: | :-------------: | :-------------: | :-------------: |
-|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/S.png" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50">
+|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/S.png" height = "50" width = "50"> | Move Back  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Back.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/P.png" height = "50" width = "50"> | Door Open  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Door%20Open.png" height = "50" width = "50">|
+|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/A.png" height = "50" width = "50"> | Move LEFT  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Left.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/D.png" height = "50" width = "50"> | Move Right  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Right.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/O.png" height = "50" width = "50"> | Door Close  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Door%20Close.png" height = "50" width = "50">|<br>
+|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/E.png" height = "50" width = "50"> | Move Up  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/UP.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/F.png" height = "50" width = "50"> | Move Down  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Down.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/L.png" height = "50" width = "50"> | Move Train  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Move%20Train.png" height = "50" width = "50">|
+|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/k.png" height = "50" width = "50"> | Roll Left  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Roll%20Left.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/J.png" height = "50" width = "50"> | Roll Right  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Pitch.png" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/H.png" height = "50" width = "50"> | Move Train  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Turn%20on%20fan.png" height = "50" width = "50">|
+
+
 
 
  
 
 
    
-</div>
+
 
 
 

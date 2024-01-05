@@ -13,6 +13,7 @@ This project includes implimentation on:
 - [Features](#features)
 - [Requirements](#requirements)
 - [Usage](#usage)
+- [Key Control](#Key control)
 - [Screenshots](#screenshots)
 - [Tutorial](#tutorial)
 - [Contributing](#contributing)
@@ -48,6 +49,14 @@ To run this project, ensure that you have the following dependencies installed:
 3. Open the project.sln file
 4. Fix the OpenGL path (For tutorial See the [Tutorial](#tutorial) Section) 
 5. Run the project
+
+## Key Control
+
+| KEY  | Operation | Visual Effect |
+| :-------------: | :-------------: | :-------------: |
+|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50">
+  |
+
 
 ## Tutorial 
 Setup Environment : <a href= "https://youtu.be/WoTRZ0t1tT4?si=uxiBXIGt65EZqlh5">Click Here for Tutorial </a>

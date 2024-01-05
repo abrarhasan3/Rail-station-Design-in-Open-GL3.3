@@ -64,19 +64,11 @@ To run this project, ensure that you have the following dependencies installed:
 | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/T.png" height = "50" width = "50"> | Yaw Left  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Yaw%20Left.png" height = "50" width = "50">| | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Y.png" height = "50" width = "50"> | Yaw Right  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Yaw%20Right.png" height = "50" width = "50">|
 | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/P.png" height = "50" width = "50"> | Door Open  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Door%20Open.png" height = "50" width = "50">| | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/O.png" height = "50" width = "50"> | Door Close  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Door%20Close.png" height = "50" width = "50">|<br>
 | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/L.png" height = "50" width = "50"> | Move Train  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/Move%20Train.png" height = "50" width = "50">|  
-
-
-
-
- 
-
-
-   
-
-
-
-
 ## Demo
+
+
+https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/2b423356-3e5f-4c45-9f3b-b9accb1417c5
+
 
 
 

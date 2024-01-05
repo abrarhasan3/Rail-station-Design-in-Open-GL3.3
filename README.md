@@ -46,10 +46,11 @@ To run this project, ensure that you have the following dependencies installed:
    ```bash
    git clone https://github.com/your-username/railway-station-scene.git
 3. Open the project.sln file
-4. Fix the OpenGL path
+4. Fix the OpenGL path (For tutorial See the [Tutorial](#tutorial) Section) 
 5. Run the project
 
-
+## Tutorial 
+Setup Environment : <a href= "https://youtu.be/WoTRZ0t1tT4?si=uxiBXIGt65EZqlh5">Click Here for Tutorial </a>
 ## Authors
 
 - [Abrar Hasan](https://www.github.com/abrarhasan3)

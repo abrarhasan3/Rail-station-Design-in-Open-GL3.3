@@ -52,9 +52,20 @@ To run this project, ensure that you have the following dependencies installed:
 
 ## Controls
 
-| KEY  | Operation | Visual Effect |
-| :-------------: | :-------------: | :-------------: |
-|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50"> |
+<div style="display: flex; justify-content: space-between;">
+
+| KEY  | Operation | Visual Effect |  | | KEY  | Operation | Visual Effect | | | KEY  | Operation | Visual Effect | 
+| :-------------: | :-------------: | :-------------: |:-------------: |:-------------: | :-------------: | :-------------: | :-------------: |:-------------: |:-------------: | :-------------: | :-------------: | :-------------: |
+|  <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/blob/main/Images/S.png" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50"> |  | | <img src ="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/c2878424-81d2-4567-ac7f-5e3c40fdf42c" height = "50" width = "50"> | Move Front  | <img src="https://github.com/abrarhasan3/Rail-station-Design-in-Open-GL3.3/assets/85815740/dd497508-6fd3-4f06-a431-5c28d33e620a" height = "50" width = "50">
+
+
+ 
+
+
+   
+</div>
+
+
 
 ## Demo
 
